@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Muslim Companion</title>
+
+    <style>
+        :root {
+            --primary: #0B6B3A;
+            --primary-light: #22C55E;
+            --bg: #0F172A;
+            --card: #1E293B;
+            --text: #FFFFFF;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* Top bar */
+        .topbar {
+            background: var(--card);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .brand {
+            font-weight: bold;
+            color: var(--primary-light);
+        }
+
+        .logout {
+            background: var(--primary);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .logout:hover {
+            background: var(--primary-light);
+            color: black;
+        }
+
+        /* Nav */
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(34, 197, 94, 0.2);
+            opacity: 1;
+            color: var(--primary-light);
+        }
+
+        /* Layout */
+        .container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            color: var(--primary-light);
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .welcome {
+            font-size: 18px;
+            margin: 20px;
+        }
+
+        .small {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #0B6B3A, #1E293B);
+            border: 1px solid #22C55E;
+        }
+
+        button {
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.25s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        button:active {
+            transform: scale(0.96);
+        }
+
+        .category-grid {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+
+            gap: 15px;
+
+            margin-top: 20px;
+
+        }
+
+        .category-card {
+
+            background: #0F172A;
+
+            border: 1px solid rgba(255, 255, 255, .08);
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            transition: .25s;
+
+        }
+
+        .category-card:hover {
+
+            transform: translateY(-5px);
+
+            border-color: #22C55E;
+
+            box-shadow: 0 0 15px rgba(34, 197, 94, .35);
+
+        }
+
+        .category-card .icon {
+
+            font-size: 42px;
+
+            margin-bottom: 12px;
+
+        }
+
+        .category-card h3 {
+
+            margin: 0;
+
+            color: white;
+        }
+
+        .dua-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .dua-card {
+            background: #1E293B;
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.2s;
+        }
+
+        .dua-card:hover {
+            transform: translateY(-3px);
+            background: #0B6B3A;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .category-card {
+            background: #1E293B;
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            background: #0B6B3A;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+
+        <div class="brand">🕌 Muslim Companion</div>
+
+        <div class="nav-links">
+            <a href="#" onclick="showSection('home')">Home</a>
+            <a href="#" onclick="showSection('prayer')">Prayer Times</a>
+            <a href="#" onclick="showSection('quran')">Qur’an</a>
+            <a href="#" onclick="showSection('duas')">Duas</a>
+        </div>
+
+        <button class="logout" onclick="logout()">Logout</button>
+
+    </div>
+
+    <!-- HOME -->
+    <div id="home" class="section">
+
+        <div class="container">
+
+            <div class="card full-width">
+                <h2>🌙 Welcome Back</h2>
+                <p id="welcomeMessage"></p>
+
+                <p style="margin-top:20px;font-size:18px;">
+                    "Indeed, with hardship comes ease."
+                </p>
+
+                <small>Qur'an 94:6</small>
+            </div>
+
+            <div class="card">
+                <h2>📅 Today's Date</h2>
+                <p id="todayDate"></p>
+            </div>
+
+            <div class="card">
+                <h2>⏰ Next Prayer</h2>
+                <p id="homeNextPrayer">Loading...</p>
+                <p id="homeCountdown">--:--:--</p>
+            </div>
+
+            <div class="card">
+                <h2>🤲 Daily Dua</h2>
+
+                <h3 id="duaTitle">Loading...</h3>
+
+                <p id="duaArabic" style="font-size:22px; text-align:right;"></p>
+
+                <p id="duaEnglish" class="small"></p>
+
+                <p id="duaReference" style="color:#22C55E;"></p>
+            </div>
+
+            <div class="card">
+                <h2>📖 Continue Reading</h2>
+                <p class="small">
+                    Resume your Qur'an journey.
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>⭐ Prayer Tracker</h2>
+                <p class="small">
+                    Today's progress: 0 / 5
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>📖 Daily Qur’an Verse</h2>
+
+                <h3 id="verseSurah">Loading...</h3>
+
+                <p id="verseArabic" style="font-size:22px; text-align:right; line-height:1.8;"></p>
+
+                <p id="verseEnglish" class="small" style="margin-top:10px;"></p>
+
+                <p id="verseReference" style="margin-top:10px; color:#22C55E; font-weight:bold;"></p>
+            </div>
+
+            <button onclick="window.location.href='favourites.html'" class="card">
+                <h1 style="font-size: 50px;">View favourite duas</h1>
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- PRAYER -->
+    <div id="prayer" class="section" style="display:none;">
+        <div class="container">
+
+            <div class="card full-width">
+                <h2>⏰ Next Prayer</h2>
+                <p id="nextPrayer">Loading...</p>
+                <p id="countdown">--:--:--</p>
+            </div>
+
+            <div class="card">
+                <h2>🕋 Prayer Times (London)</h2>
+                <p class="small" id="date">Loading...</p>
+            </div>
+
+            <div class="card">
+                <h2>Fajr</h2>
+                <p id="fajr">--:--</p>
+            </div>
+
+            <div class="card">
+                <h2>Dhuhr</h2>
+                <p id="dhuhr">--:--</p>
+            </div>
+
+            <div class="card">
+                <h2>Asr</h2>
+                <p id="asr">--:--</p>
+            </div>
+
+            <div class="card">
+                <h2>Maghrib</h2>
+                <p id="maghrib">--:--</p>
+            </div>
+
+            <div class="card">
+                <h2>Isha</h2>
+                <p id="isha">--:--</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- QURAN -->
+    <div id="quran" class="section" style="display:none;">
+        <div class="container">
+
+            <!-- LEFT: SURAH LIST -->
+            <div class="card" style="grid-column:1 / 2; max-height:80vh; overflow:auto;">
+                <h2>📚 Surahs</h2>
+                <div id="surahList">Loading...</div>
+            </div>
+
+            <!-- RIGHT: READER -->
+            <div class="card" style="grid-column:2 / -1; max-height:80vh; overflow:auto;">
+                <h2 id="surahTitle">Select a Surah</h2>
+                <div id="miniPlayer" style="
+                    padding:10px;
+                    margin-bottom:10px;
+                    border-radius:8px;
+                    background:#0F172A;
+                    display:none;
+                ">
+                    <div id="nowPlaying">Not playing</div>
+
+                    <button onclick="togglePlayPause()" style="
+                        margin-top:8px;
+                        padding:6px 10px;
+                        border:none;
+                        border-radius:6px;
+                        background:#22C55E;
+                        cursor:pointer;
+                    ">
+                        ⏯ Play / Pause
+                    </button>
+
+                    <button onclick="stopAudio()" style="
+                        margin-top:8px;
+                        padding:6px 10px;
+                        border:none;
+                        border-radius:6px;
+                        background:#ef4444;
+                        color:white;
+                        cursor:pointer;
+                    ">
+                        Stop
+                    </button>
+                </div>
+                <div id="ayahList" style="font-size:20px; line-height:2; text-align:right;"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--Dua-->
+    <div id="duas" class="section" style="display:none;">
+
+        <div class="container">
+
+            <!-- DAILY DUA -->
+            <div class="card full-width">
+
+                <h2>🌙 Daily Dua</h2>
+
+                <h3 id="dailyDuaTitle">Loading...</h3>
+
+                <p id="dailyDuaArabic" style="font-size:32px;text-align:right;line-height:2;margin:20px 0;">
+                </p>
+
+                <p id="dailyDuaEnglish" class="small"></p>
+
+                <p id="dailyDuaReference" style="color:#22C55E;font-weight:bold;"></p>
+
+                <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+
+                    <button onclick="saveFavouriteDua()" style="
+                        margin-top:8px;
+                        padding:6px 10px;
+                        border:none;
+                        border-radius:6px;
+                        background:#22C55E;
+                        color:white;
+                        cursor:pointer;
+                    ">
+                        ❤️ Save
+                    </button>
+
+                    <button onclick="copyDua()" style="
+                        margin-top:8px;
+                        padding:6px 10px;
+                        border:none;
+                        border-radius:6px;
+                        background: #3B82F6;
+                        color:white;
+                        cursor:pointer;
+                    ">
+                        📋 Copy
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="card full-width">
+
+                <h2>📂 Browse Categories</h2>
+
+                <div class="category-grid">
+
+                    <div class="category-card" onclick="openCategory('Morning')">
+                        <div class="icon">☀️</div>
+                        <h3>Morning</h3>
+                    </div>
+
+                    <div class="category-card" onclick="openCategory('Evening')">
+                        <div class="icon">🌙</div>
+                        <h3>Evening</h3>
+                    </div>
+
+                    <div class="category-card" onclick="openCategory('Food')">
+                        <div class="icon">🍽</div>
+                        <h3>Food</h3>
+                    </div>
+
+                    <div class="category-card" onclick="openCategory('Sleep')">
+                        <div class="icon">😴</div>
+                        <h3>Sleep</h3>
+                    </div>
+
+                    <div class="category-card" onclick="openCategory('Home')">
+                        <div class="icon">🏠</div>
+                        <h3>Home</h3>
+                    </div>
+
+                    <div class="category-card" onclick="openCategory('Travel')">
+                        <div class="icon">✈️</div>
+                        <h3>Travel</h3>
+                    </div>
+
+                    <div class="category-card" onclick="openCategory('Protection')">
+                        <div class="icon">🛡</div>
+                        <h3>Protection</h3>
+                    </div>
+
+                    <div class="category-card" onclick="openCategory('Forgiveness')">
+                        <div class="icon">❤️</div>
+                        <h3>Forgiveness</h3>
+                    </div>
+
+                    <div class="category-card" onclick="openCategory('Prayer')">
+                        <div class="icon">🤲</div>
+                        <h3>Prayer</h3>
+                    </div>
+
+                    <div class="category-card" onclick="openCategory('Knowledge')">
+                        <div class="icon">📚</div>
+                        <h3>Knowledge</h3>
+                    </div>
+
+                    <div class="category-card" onclick="openCategory('Family')">
+                        <div class="icon">👨‍👩‍👧</div>
+                        <h3>Family</h3>
+                    </div>
+
+                    <div class="category-card" onclick="openCategory('Health')">
+                        <div class="icon">🤒</div>
+                        <h3>Health</h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =======================
+           AUTH
+        ======================= */
+        let currentSurahNumber = null;
+        let currentAudio = null;
+        let currentSurah = null;
+        let currentAyah = null;
+        let activeAyahElement = null;
+        let currentDua = null;
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (!user) {
+            window.location.href = "/login.html";
+        }
+
+        document.getElementById("welcomeMessage").innerText =
+            "As-Salamu Alaikum, " + user.name + " 🌙";
+
+        const today = new Date();
+
+        document.getElementById("todayDate").innerText =
+            today.toLocaleDateString("en-GB", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
+
+        function logout() {
+            localStorage.removeItem("user");
+            window.location.href = "/login.html";
+        }
+
+        /* =======================
+           NAVIGATION
+        ======================= */
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll(".section");
+
+            sections.forEach(sec => {
+                sec.style.display = "none";
+            });
+
+            const target = document.getElementById(sectionId);
+            if (target) target.style.display = "block";
+
+            if (sectionId === "prayer") {
+                loadPrayerTimes();
+            }
+            if (sectionId === "quran") {
+                loadSurahs();
+            }
+        }
+
+        /* =======================
+           PRAYER DATA
+        ======================= */
+        let prayerTimes = null;
+        let countdownInterval = null;
+
+        /* =======================
+           LOCATION
+        ======================= */
+        async function getUserLocation() {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject("Geolocation not supported");
+                }
+
+                navigator.geolocation.getCurrentPosition(
+                    pos => resolve({
+                        lat: pos.coords.latitude,
+                        lon: pos.coords.longitude
+                    }),
+                    err => reject(err)
+                );
+            });
+        }
+
+        /* =======================
+           REVERSE GEOCODING
+        ======================= */
+        async function getCityFromCoords(lat, lon) {
+            const res = await fetch(
+                `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
+            );
+
+            const data = await res.json();
+
+            return (
+                data.address.city ||
+                data.address.town ||
+                data.address.village ||
+                "London"
+            );
+        }
+
+        /* =======================
+           LOAD PRAYER TIMES
+        ======================= */
+        async function loadPrayerTimes() {
+            try {
+                const location = await getUserLocation();
+                const city = await getCityFromCoords(location.lat, location.lon);
+
+                const res = await fetch(
+                    `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=&method=2`
+                );
+
+                const data = await res.json();
+                const timings = data.data.timings;
+
+                prayerTimes = timings;
+
+                document.getElementById("date").innerText =
+                    data.data.date.readable;
+
+                document.getElementById("fajr").innerText = timings.Fajr;
+                document.getElementById("dhuhr").innerText = timings.Dhuhr;
+                document.getElementById("asr").innerText = timings.Asr;
+                document.getElementById("maghrib").innerText = timings.Maghrib;
+                document.getElementById("isha").innerText = timings.Isha;
+
+                document.getElementById("nextPrayer").innerText =
+                    "Loaded for " + city;
+
+                if (!countdownInterval) {
+                    countdownInterval = setInterval(updateCountdown, 1000);
+                }
+
+            } catch (err) {
+                console.log("Location failed, using fallback:", err);
+
+                const res = await fetch(
+                    "https://api.aladhan.com/v1/timingsByCity?city=London&country=UK&method=2"
+                );
+
+                const data = await res.json();
+                const timings = data.data.timings;
+
+                prayerTimes = timings;
+
+                document.getElementById("date").innerText =
+                    data.data.date.readable;
+
+                document.getElementById("fajr").innerText = timings.Fajr;
+                document.getElementById("dhuhr").innerText = timings.Dhuhr;
+                document.getElementById("asr").innerText = timings.Asr;
+                document.getElementById("maghrib").innerText = timings.Maghrib;
+                document.getElementById("isha").innerText = timings.Isha;
+
+                document.getElementById("nextPrayer").innerText =
+                    "London (fallback)";
+
+                if (!countdownInterval) {
+                    countdownInterval = setInterval(updateCountdown, 1000);
+                }
+            }
+        }
+
+        /* =======================
+           TIME HELPERS
+        ======================= */
+        function timeToDate(timeStr) {
+            const [h, m] = timeStr.split(":");
+            const date = new Date();
+            date.setHours(h, m, 0, 0);
+            return date;
+        }
+
+        /* =======================
+           COUNTDOWN (NO NOTIFICATIONS)
+        ======================= */
+        function updateCountdown() {
+            if (!prayerTimes) {
+                document.getElementById("countdown").innerText = "Loading...";
+                return;
+            }
+
+            const now = new Date();
+
+            const prayers = [
+                { name: "Fajr", time: prayerTimes.Fajr },
+                { name: "Dhuhr", time: prayerTimes.Dhuhr },
+                { name: "Asr", time: prayerTimes.Asr },
+                { name: "Maghrib", time: prayerTimes.Maghrib },
+                { name: "Isha", time: prayerTimes.Isha }
+            ];
+
+            let next = null;
+
+            for (let p of prayers) {
+                const prayerDate = timeToDate(p.time);
+
+                if (prayerDate > now) {
+                    next = { ...p, date: prayerDate };
+                    break;
+                }
+            }
+
+            if (!next) {
+                next = {
+                    name: "Fajr",
+                    time: prayerTimes.Fajr,
+                    date: timeToDate(prayerTimes.Fajr)
+                };
+                next.date.setDate(next.date.getDate() + 1);
+            }
+
+            const diff = next.date - now;
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("nextPrayer").innerText = next.name;
+            document.getElementById("homeNextPrayer").innerText = next.name;
+
+            document.getElementById("countdown").innerText =
+                `${hours}h ${minutes}m ${seconds}s`;
+
+            document.getElementById("homeCountdown").innerText =
+                `${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        const duas = [
+
+            // ☀️ MORNING
+            {
+                title: "Morning Dua",
+                category: "Morning",
+                arabic: "اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا",
+                english: "O Allah, by You we enter the morning and by You we enter the evening.",
+                reference: "Abu Dawud"
+            },
+            {
+                title: "Morning Protection",
+                category: "Morning",
+                arabic: "رَضِيتُ بِاللَّهِ رَبًّا وَبِالإِسْلامِ دِينًا وَبِمُحَمَّدٍ ﷺ نَبِيًّا",
+                english: "I am pleased with Allah as my Lord, Islam as my religion and Muhammad ﷺ as my Prophet.",
+                reference: "Abu Dawud"
+            },
+
+            // 🌙 EVENING
+            {
+                title: "Evening Dua",
+                category: "Evening",
+                arabic: "اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا",
+                english: "O Allah, by You we enter the evening and by You we enter the morning.",
+                reference: "Abu Dawud"
+            },
+            {
+                title: "Evening Protection",
+                category: "Evening",
+                arabic: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+                english: "I seek refuge in the perfect words of Allah from the evil of what He has created.",
+                reference: "Muslim"
+            },
+
+            // 🍽 FOOD
+            {
+                title: "Before Eating",
+                category: "Food",
+                arabic: "بِسْمِ اللَّهِ",
+                english: "In the name of Allah.",
+                reference: "Bukhari"
+            },
+            {
+                title: "After Eating",
+                category: "Food",
+                arabic: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا",
+                english: "Praise be to Allah who has fed me this food.",
+                reference: "Abu Dawud"
+            },
+
+            // 😴 SLEEP
+            {
+                title: "Before Sleep",
+                category: "Sleep",
+                arabic: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
+                english: "In Your name, O Allah, I die and I live.",
+                reference: "Bukhari"
+            },
+            {
+                title: "Upon Waking",
+                category: "Sleep",
+                arabic: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا",
+                english: "Praise be to Allah who gave us life after causing us to die.",
+                reference: "Bukhari"
+            },
+
+            // 🚪 HOME
+            {
+                title: "Leaving Home",
+                category: "Home",
+                arabic: "بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ",
+                english: "In the name of Allah, I place my trust in Allah.",
+                reference: "Abu Dawud"
+            },
+            {
+                title: "Entering Home",
+                category: "Home",
+                arabic: "بِسْمِ اللَّهِ وَلَجْنَا وَبِسْمِ اللَّهِ خَرَجْنَا",
+                english: "In the name of Allah we enter and in the name of Allah we leave.",
+                reference: "Abu Dawud"
+            },
+
+            // ✈️ TRAVEL
+            {
+                title: "Travel Dua",
+                category: "Travel",
+                arabic: "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا",
+                english: "Glory be to Him who has subjected this to us.",
+                reference: "Quran 43:13"
+            },
+
+            // 🤲 PRAYER
+            {
+                title: "Guidance",
+                category: "Prayer",
+                arabic: "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
+                english: "Guide us to the straight path.",
+                reference: "Quran 1:6"
+            },
+            {
+                title: "Increase Knowledge",
+                category: "Prayer",
+                arabic: "رَبِّ زِدْنِي عِلْمًا",
+                english: "My Lord, increase me in knowledge.",
+                reference: "Quran 20:114"
+            },
+
+            // ❤️ FORGIVENESS
+            {
+                title: "Seeking Forgiveness",
+                category: "Forgiveness",
+                arabic: "أَسْتَغْفِرُ اللَّهَ",
+                english: "I seek forgiveness from Allah.",
+                reference: "Muslim"
+            },
+            {
+                title: "Sayyidul Istighfar",
+                category: "Forgiveness",
+                arabic: "اللَّهُمَّ أَنْتَ رَبِّي لا إِلَهَ إِلَّا أَنْتَ...",
+                english: "O Allah, You are my Lord. None has the right to be worshipped except You...",
+                reference: "Bukhari"
+            },
+
+            // 🛡 PROTECTION
+            {
+                title: "Protection from Evil",
+                category: "Protection",
+                arabic: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ",
+                english: "Say: I seek refuge in the Lord of daybreak.",
+                reference: "Quran 113"
+            },
+            {
+                title: "Protection from Shaytan",
+                category: "Protection",
+                arabic: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
+                english: "I seek refuge in Allah from Satan.",
+                reference: "Quran"
+            },
+            {
+                title: "Protection from Harm",
+                category: "Protection",
+                arabic: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ",
+                english: "In the name of Allah with whose name nothing can cause harm.",
+                reference: "Tirmidhi"
+            },
+
+            // 💚 WELLBEING
+            {
+                title: "Ease in Difficulty",
+                category: "Wellbeing",
+                arabic: "اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلًا",
+                english: "Nothing is easy except what You make easy.",
+                reference: "Ibn Hibban"
+            },
+            {
+                title: "Stress Relief",
+                category: "Wellbeing",
+                arabic: "حَسْبِيَ اللَّهُ وَنِعْمَ الْوَكِيلُ",
+                english: "Allah is sufficient for me, and He is the best disposer of affairs.",
+                reference: "Quran 3:173"
+            },
+            {
+                title: "Patience",
+                category: "Wellbeing",
+                arabic: "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ",
+                english: "Indeed Allah is with the patient.",
+                reference: "Quran 2:153"
+            },
+            {
+                title: "Good in this World",
+                category: "Wellbeing",
+                arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً",
+                english: "Our Lord, give us good in this world and in the Hereafter.",
+                reference: "Quran 2:201"
+            },
+
+            // ❤️ GRATITUDE
+            {
+                title: "Gratitude",
+                category: "Gratitude",
+                arabic: "الْحَمْدُ لِلَّهِ",
+                english: "All praise belongs to Allah.",
+                reference: "Quran"
+            },
+
+            // 📚 KNOWLEDGE
+            {
+                title: "Knowledge",
+                category: "Knowledge",
+                arabic: "رَبِّ زِدْنِي عِلْمًا",
+                english: "My Lord, increase me in knowledge.",
+                reference: "Quran 20:114"
+            },
+
+            // 💖 HEART
+            {
+                title: "Calm Heart",
+                category: "Heart",
+                arabic: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+                english: "Verily, in the remembrance of Allah do hearts find rest.",
+                reference: "Quran 13:28"
+            },
+
+            // 🤒 HEALTH
+            {
+                title: "Healing",
+                category: "Health",
+                arabic: "اللَّهُمَّ رَبَّ النَّاسِ أَذْهِبِ الْبَأْسَ",
+                english: "O Allah, Lord of mankind, remove the suffering and grant healing.",
+                reference: "Bukhari"
+            },
+
+            // 😠 ANGER
+            {
+                title: "When Angry",
+                category: "Character",
+                arabic: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
+                english: "I seek refuge in Allah from Satan.",
+                reference: "Bukhari"
+            },
+
+            // 🤝 PARENTS
+            {
+                title: "For Parents",
+                category: "Family",
+                arabic: "رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
+                english: "My Lord, have mercy upon them as they raised me when I was small.",
+                reference: "Quran 17:24"
+            },
+
+            // 👨‍👩‍👧 FAMILY
+            {
+                title: "Righteous Family",
+                category: "Family",
+                arabic: "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ",
+                english: "Our Lord, grant us spouses and offspring who will be the comfort of our eyes.",
+                reference: "Quran 25:74"
+            }
+        ];
+
+        localStorage.setItem("duasData", JSON.stringify(duas));
+
+        function loadDailyDua() {
+
+            const today = new Date();
+            const index = today.getDate() % duas.length;
+
+            currentDua = duas[index];
+
+            // Home card
+            document.getElementById("duaTitle").innerText = currentDua.title;
+            document.getElementById("duaArabic").innerText = currentDua.arabic;
+            document.getElementById("duaEnglish").innerText = currentDua.english;
+            document.getElementById("duaReference").innerText =
+                "Reference: " + currentDua.reference;
+
+            // Duas page card
+            document.getElementById("dailyDuaTitle").innerText = currentDua.title;
+            document.getElementById("dailyDuaArabic").innerText = currentDua.arabic;
+            document.getElementById("dailyDuaEnglish").innerText = currentDua.english;
+            document.getElementById("dailyDuaReference").innerText =
+                "Reference: " + currentDua.reference;
+        }
+
+        function copyDua() {
+
+            const text =
+                `${currentDua.title}
+
+${currentDua.arabic}
+
+${currentDua.english}
+
+Reference: ${currentDua.reference}`;
+
+            navigator.clipboard.writeText(text);
+
+            alert("Dua copied!");
+        }
+
+        function saveFavouriteDua() {
+
+            let favourites =
+                JSON.parse(localStorage.getItem("favouriteDuas")) || [];
+
+            const exists = favourites.find(d => d.title === currentDua.title);
+
+            if (!exists) {
+                favourites.push(currentDua);
+                localStorage.setItem(
+                    "favouriteDuas",
+                    JSON.stringify(favourites)
+                );
+                alert("Saved to favourites ❤️");
+            } else {
+                alert("Already saved.");
+            }
+        }
+
+        const verses = [
+            {
+                surah: "Al-Baqarah 2:286",
+                arabic: "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا",
+                english: "Allah does not burden a soul beyond what it can bear."
+            },
+            {
+                surah: "Ash-Sharh 94:6",
+                arabic: "إِنَّ مَعَ الْعُسْرِ يُسْرًا",
+                english: "Indeed, with hardship comes ease."
+            },
+            {
+                surah: "Az-Zumar 39:53",
+                arabic: "لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ",
+                english: "Do not despair of Allah’s mercy."
+            },
+            {
+                surah: "Al-Baqarah 2:153",
+                arabic: "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ",
+                english: "Allah is with the patient."
+            },
+            {
+                surah: "Al-Fatiha 1:6",
+                arabic: "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
+                english: "Guide us to the straight path."
+            },
+            {
+                surah: "Ar-Ra’d 13:28",
+                arabic: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+                english: "Hearts find peace in Allah’s remembrance."
+            },
+            {
+                surah: "Taha 20:114",
+                arabic: "رَبِّ زِدْنِي عِلْمًا",
+                english: "My Lord, increase me in knowledge."
+            },
+            {
+                surah: "Al-Baqarah 2:152",
+                arabic: "فَاذْكُرُونِي أَذْكُرْكُمْ",
+                english: "Remember Me, I will remember you."
+            },
+            {
+                surah: "Al-Inshirah 94:5",
+                arabic: "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا",
+                english: "With hardship comes ease."
+            },
+            {
+                surah: "Al-Imran 3:139",
+                arabic: "وَلَا تَهِنُوا وَلَا تَحْزَنُوا",
+                english: "Do not weaken or grieve."
+            },
+
+            // --- EXPANDED SET ---
+            {
+                surah: "Al-Ankabut 29:69",
+                arabic: "وَالَّذِينَ جَاهَدُوا فِينَا",
+                english: "Those who strive for Us, We guide them."
+            },
+            {
+                surah: "Yunus 10:57",
+                arabic: "شِفَاءٌ لِّمَا فِي الصُّدُورِ",
+                english: "Healing for what is in the hearts."
+            },
+            {
+                surah: "Al-Isra 17:82",
+                arabic: "وَنُنَزِّلُ مِنَ الْقُرْآنِ مَا هُوَ شِفَاءٌ",
+                english: "The Qur’an is healing and mercy."
+            },
+            {
+                surah: "Al-Hadid 57:4",
+                arabic: "وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ",
+                english: "He is with you wherever you are."
+            },
+            {
+                surah: "Al-Baqarah 2:45",
+                arabic: "وَاسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ",
+                english: "Seek help through patience and prayer."
+            },
+            {
+                surah: "Al-Baqarah 2:201",
+                arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً",
+                english: "Our Lord, give us good in this world."
+            },
+            {
+                surah: "Al-Kawthar 108:2",
+                arabic: "فَصَلِّ لِرَبِّكَ وَانْحَرْ",
+                english: "Pray to your Lord and sacrifice."
+            },
+            {
+                surah: "Al-Asr 103:1-3",
+                arabic: "إِنَّ الْإِنسَانَ لَفِي خُسْرٍ",
+                english: "Indeed mankind is in loss."
+            },
+            {
+                surah: "Al-Fajr 89:27",
+                arabic: "يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ",
+                english: "O peaceful soul, return to your Lord."
+            }
+        ];
+
+        function loadDailyVerse() {
+            const today = new Date();
+
+            // changes once per day
+            const index = today.getDate() % verses.length;
+
+            const verse = verses[index];
+
+            document.getElementById("verseSurah").innerText = verse.surah;
+            document.getElementById("verseArabic").innerText = verse.arabic;
+            document.getElementById("verseEnglish").innerText = verse.english;
+            document.getElementById("verseReference").innerText = verse.surah;
+        }
+
+        loadDailyVerse();
+
+        async function loadSurahs() {
+            const res = await fetch("https://api.alquran.cloud/v1/surah");
+            const data = await res.json();
+
+            const list = document.getElementById("surahList");
+            list.innerHTML = "";
+
+            data.data.forEach(surah => {
+                const div = document.createElement("div");
+
+                div.innerHTML = `
+            <div style="
+                padding:10px;
+                margin:5px 0;
+                cursor:pointer;
+                border-radius:8px;
+                background:#0F172A;
+            ">
+                <b>${surah.number}. ${surah.englishName}</b><br>
+                <small>${surah.name}</small>
+            </div>
+        `;
+
+                div.onclick = () => loadSurah(surah.number);
+
+                list.appendChild(div);
+            });
+        }
+
+        async function loadSurah(number) {
+            document.getElementById("ayahList").innerHTML = "Loading...";
+
+            const res = await fetch(
+                `https://api.alquran.cloud/v1/surah/${number}/editions/quran-uthmani,en.asad`
+            );
+
+            const data = await res.json();
+
+            const arabic = data.data[0];
+            const english = data.data[1];
+
+            const title = document.getElementById("surahTitle");
+            title.innerHTML = `
+    ${arabic.englishName}
+    <div style="margin-top:10px;">
+        <button onclick="playSurahAudio(${number})"
+            style="
+                padding:8px 12px;
+                border:none;
+                border-radius:6px;
+                background:#22C55E;
+                cursor:pointer;
+                margin-right:10px;
+            ">
+            ▶ Play Audio
+        </button>
+
+        <button onclick="stopAudio()"
+            style="
+                padding:8px 12px;
+                border:none;
+                border-radius:6px;
+                background:#ef4444;
+                color:white;
+                cursor:pointer;
+            ">
+            ⏹ Stop
+        </button>
+    </div>
+`;
+
+            const container = document.getElementById("ayahList");
+            container.innerHTML = "";
+
+            for (let i = 0; i < arabic.ayahs.length; i++) {
+                const ayah = document.createElement("div");
+
+                ayah.className = "ayah-box";
+                ayah.id = `ayah-${number}-${i + 1}`;
+                ayah.style.padding = "10px";
+                ayah.style.borderBottom = "1px solid rgba(255,255,255,0.1)";
+                ayah.style.cursor = "pointer";
+
+                ayah.onclick = () => playAyahAudio(number, i + 1);
+
+                ayah.innerHTML = `
+    <div style="
+        font-size:26px;
+        text-align:right;
+    ">
+        ${arabic.ayahs[i].text}
+    </div>
+
+    <div class="small" style="margin-top:10px;">
+        ${english.ayahs[i].text}
+    </div>
+
+    <div style="color:#22C55E; font-size:12px; margin-top:5px;">
+        Click anywhere to play
+    </div>
+`;
+
+                container.appendChild(ayah);
+            }
+        }
+        function playAyahAudio(surah, ayah) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+
+            currentSurah = surah;
+            currentAyah = ayah;
+
+            const url = `https://api.alquran.cloud/v1/ayah/${surah}:${ayah}/ar.alafasy`;
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    const audioUrl = data.data.audio;
+
+                    currentAudio = new Audio(audioUrl);
+
+                    // 🔥 when ayah ends → play next
+                    currentAudio.onended = () => {
+                        const nextAyah = currentAyah + 1;
+
+                        const nextEl = document.getElementById(`ayah-${currentSurah}-${nextAyah}`);
+
+                        if (nextEl) {
+                            playAyahAudio(currentSurah, nextAyah);
+                        } else {
+                            console.log("Surah finished");
+                        }
+                    };
+
+                    currentAudio.play();
+
+                    // 🔥 highlight system
+                    if (activeAyahElement) {
+                        activeAyahElement.style.background = "transparent";
+                    }
+
+                    const el = document.getElementById(`ayah-${surah}-${ayah}`);
+
+                    if (el) {
+                        el.style.background = "rgba(34,197,94,0.2)";
+                        el.style.borderRadius = "8px";
+                        activeAyahElement = el;
+
+                        el.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                    }
+
+                    // mini player
+                    const mini = document.getElementById("miniPlayer");
+                    const nowPlaying = document.getElementById("nowPlaying");
+
+                    if (mini) mini.style.display = "block";
+                    if (nowPlaying) {
+                        nowPlaying.innerText = `Surah ${surah}, Ayah ${ayah}`;
+                    }
+                })
+                .catch(err => {
+                    console.log("Audio error:", err);
+                });
+        }
+        function playSurahAudio(number) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+
+            // start from first ayah
+            playAyahAudio(number, 1);
+        }
+        function stopAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+
+            currentSurah = null;
+            currentAyah = null;
+
+            document.getElementById("miniPlayer").style.display = "none";
+        }
+        function togglePlayPause() {
+            if (!currentAudio) return;
+
+            if (currentAudio.paused) {
+                currentAudio.play();
+            } else {
+                currentAudio.pause();
+            }
+        }
+        function highlightAyah(surah, ayah) {
+            // remove old highlight
+            if (activeAyahElement) {
+                activeAyahElement.style.background = "transparent";
+            }
+
+            const el = document.getElementById(`ayah-${surah}-${ayah}`);
+
+            if (el) {
+                el.style.background = "rgba(34,197,94,0.2)";
+                el.style.borderRadius = "8px";
+                activeAyahElement = el;
+
+                el.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }
+        }
+
+        function filterDuas(category) {
+
+            const container = document.getElementById("duaResults");
+
+            container.innerHTML = "";
+
+            let results = duas;
+
+            if (category !== "All") {
+                results = duas.filter(d => d.category === category);
+            }
+
+            results.forEach(dua => {
+
+                const card = document.createElement("div");
+
+                card.className = "card";
+
+                card.innerHTML = `
+            <h3>${dua.title}</h3>
+
+            <p style="font-size:26px;text-align:right;">
+                ${dua.arabic}
+            </p>
+
+            <p>${dua.english}</p>
+
+            <small style="color:#22C55E;">
+                ${dua.reference}
+            </small>
+        `;
+
+                container.appendChild(card);
+
+            });
+
+        }
+
+        function openCategory(category) {
+
+            localStorage.setItem("selectedCategory", category);
+
+            window.location.href = "dua-category.html";
+
+        }
+
+
+        loadPrayerTimes();
+        loadDailyDua();
+    </script>
+
+</body>
+
+</html>
