@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bookmarks</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0F172A;
+            color: white;
+        }
+
+        .topbar {
+            padding: 15px;
+            background: #1E293B;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card {
+            background: #1E293B;
+            margin: 15px;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        button {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .open {
+            background: #22C55E;
+            color: white;
+        }
+
+        .delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .empty {
+            text-align: center;
+            opacity: 0.7;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <h3>🔖 Bookmarks</h3>
+        <button onclick="goBack()" style="background:#22C55E;">Back</button>
+    </div>
+
+    <div id="list"></div>
+
+    <script>
+
+        let bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+
+        function loadBookmarks() {
+            const list = document.getElementById("list");
+            list.innerHTML = "";
+
+            if (bookmarks.length === 0) {
+                list.innerHTML = `
+            <div class="empty">
+                <h2>No bookmarks yet</h2>
+                <p>Bookmark ayahs from the Qur’an reader</p>
+            </div>
+        `;
+                return;
+            }
+
+            bookmarks.forEach((b, index) => {
+
+                const card = document.createElement("div");
+                card.className = "card";
+
+                card.innerHTML = `
+            <h3>Surah ${b.surah}, Ayah ${b.ayah}</h3>
+
+            <button class="open" onclick="openAyah(${b.surah}, ${b.ayah})">
+                Open
+            </button>
+
+            <button class="delete" onclick="removeBookmark(${index})">
+                Remove
+            </button>
+        `;
+
+                list.appendChild(card);
+            });
+        }
+
+        function removeBookmark(index) {
+            bookmarks.splice(index, 1);
+            localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+            loadBookmarks();
+        }
+
+        function openAyah(surah, ayah) {
+                localStorage.setItem("goToSurah", surah);
+                localStorage.setItem("goToAyah", ayah);
+                localStorage.setItem("autoPlay", "true"); // 🔥 ADD THIS
+                window.location.href = "index.html";
+            }
+
+        function goBack() {
+            window.location.href = "index.html";
+        }
+
+        loadBookmarks();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dua Category</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0F172A;
+            color: white;
+        }
+
+        .topbar {
+            padding: 15px 20px;
+            background: #1E293B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #22C55E;
+        }
+
+        .card {
+            background: #1E293B;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .arabic {
+            font-size: 26px;
+            text-align: right;
+            margin: 15px 0;
+        }
+
+        .small {
+            opacity: 0.8;
+        }
+
+        .btns {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .save {
+            background: #22C55E;
+        }
+
+        .copy {
+            background: #3B82F6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <h3 id="title">Duas</h3>
+        <button onclick="goBack()" style="background:#ef4444;">Back</button>
+    </div>
+
+    <div class="container" id="duaContainer">
+        Loading...
+    </div>
+
+    <script>
+        const duas = JSON.parse(localStorage.getItem("duasData")) || [];
+        const category = localStorage.getItem("selectedCategory");
+
+        document.getElementById("title").innerText = category + " Duas";
+
+        let currentList = [];
+
+        function loadDuas() {
+
+            const container = document.getElementById("duaContainer");
+            container.innerHTML = "";
+
+            const filtered = duas.filter(d => d.category === category);
+            currentList = filtered;
+
+            if (filtered.length === 0) {
+                container.innerHTML = "<p>No duas found in this category.</p>";
+                return;
+            }
+
+            filtered.forEach((dua) => {
+
+                const card = document.createElement("div");
+                card.className = "card";
+
+                card.innerHTML = `
+                    <h3>${dua.title}</h3>
+                    <div class="arabic">${dua.arabic}</div>
+                    <p>${dua.english}</p>
+                    <p class="small">${dua.reference}</p>
+
+                    <div class="btns">
+                        <button class="save">❤️ Save</button>
+                        <button class="copy">📋 Copy</button>
+                    </div>
+                `;
+
+                // BUTTONS
+                card.querySelector(".copy").onclick = () => copyDua(dua);
+                card.querySelector(".save").onclick = () => saveFavouriteDua(dua);
+
+                container.appendChild(card);
+            });
+        }
+
+        function copyDua(dua) {
+            const text =
+                `${dua.title}
+
+${dua.arabic}
+
+${dua.english}
+
+Reference: ${dua.reference}`;
+
+            navigator.clipboard.writeText(text);
+            alert("Dua copied!");
+        }
+
+        function saveFavouriteDua(dua) {
+
+            let favourites = JSON.parse(localStorage.getItem("favouriteDuas")) || [];
+
+            const exists = favourites.find(d => d.title === dua.title);
+
+            if (!exists) {
+                favourites.push(dua);
+                localStorage.setItem("favouriteDuas", JSON.stringify(favourites));
+                alert("Saved to favourites ❤️");
+            } else {
+                alert("Already saved.");
+            }
+        }
+
+        function goBack() {
+            window.location.href = "index.html";
+        }
+
+        loadDuas();
+    </script>
+
+</body>
+
+</html>

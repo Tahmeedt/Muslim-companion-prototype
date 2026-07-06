@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Favourite Duas</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0F172A;
+            color: white;
+        }
+
+        .topbar {
+            padding: 15px 20px;
+            background: #1E293B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #22C55E;
+        }
+
+        .card {
+            background: #1E293B;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .arabic {
+            font-size: 26px;
+            text-align: right;
+            margin: 15px 0;
+        }
+
+        .small {
+            opacity: 0.8;
+        }
+
+        .btns {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .remove {
+            background: #EF4444;
+        }
+
+        .copy {
+            background: #3B82F6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <h3>❤️ Favourite Duas</h3>
+        <button onclick="goBack()" style="background:#22C55E;">Back</button>
+    </div>
+
+    <div class="container" id="favContainer">
+        Loading...
+    </div>
+
+    <script>
+
+        let favourites = JSON.parse(localStorage.getItem("favouriteDuas")) || [];
+
+        function loadFavourites() {
+
+            const container = document.getElementById("favContainer");
+            container.innerHTML = "";
+
+               if (favourites.length === 0) {
+                container.innerHTML = `
+                    <div class="empty">
+                        <div style="font-size:60px;">🤲</div>
+                        <h2>No Favourite Duas Yet</h2>
+                        <p>Tap ❤️ on a dua to save it here</p>
+                    </div>
+                `;
+                return;
+            }
+
+            if (favourites.length === 0) {
+                container.innerHTML = "<p>No favourites saved yet ❤️</p>";
+                return;
+            }
+
+            favourites.forEach((dua, index) => {
+
+                const card = document.createElement("div");
+                card.className = "card";
+
+                card.innerHTML = `
+                    <h3>${dua.title}</h3>
+
+                    <div class="arabic">${dua.arabic}</div>
+
+                    <p>${dua.english}</p>
+
+                    <p class="small">${dua.reference}</p>
+
+                    <div class="btns">
+                        <button class="copy">📋 Copy</button>
+                        <button class="remove">🗑 Remove</button>
+                    </div>
+                `;
+
+                // COPY
+                card.querySelector(".copy").onclick = () => {
+                    const text =
+                        `${dua.title}
+
+${dua.arabic}
+
+${dua.english}
+
+Reference: ${dua.reference}`;
+
+                    navigator.clipboard.writeText(text);
+                    alert("Copied!");
+                };
+
+                // REMOVE
+                card.querySelector(".remove").onclick = () => {
+                    favourites.splice(index, 1);
+                    localStorage.setItem("favouriteDuas", JSON.stringify(favourites));
+                    loadFavourites();
+                };
+
+                container.appendChild(card);
+            });
+        }
+
+        function goBack() {
+            window.location.href = "index.html";
+        }
+
+        loadFavourites();
+
+    </script>
+
+</body>
+
+</html>

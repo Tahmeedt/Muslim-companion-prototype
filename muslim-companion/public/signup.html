@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sign Up</title>
+
+    <style>
+        :root {
+            --primary: #0B6B3A;
+            --primary-light: #22C55E;
+            --bg: #0F172A;
+            --card: #1E293B;
+            --text: #FFFFFF;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: var(--text);
+        }
+
+        .card {
+            background: var(--card);
+            padding: 32px;
+            border-radius: 14px;
+            width: 320px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-light);
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            background: #0b1220;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        input:focus {
+            border: 1px solid var(--primary-light);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: var(--primary-light);
+            color: black;
+        }
+
+        .msg {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 14px;
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <h1>🕌 Sign Up</h1>
+
+        <input id="name" type="text" placeholder="Name" />
+        <input id="email" placeholder="Email" />
+        <input id="password" type="password" placeholder="Password" />
+
+        <button onclick="signup()">Create Account</button>
+
+        <p id="msg" class="msg"></p>
+
+        <a href="/login.html">Already have an account? Login</a>
+
+    </div>
+
+    <script>
+        function signup() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            fetch("/api/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password, name })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("msg").innerText = data.message;
+                });
+        }
+    </script>
+
+</body>
+
+</html>
