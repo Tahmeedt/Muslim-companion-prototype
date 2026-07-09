@@ -321,3 +321,85 @@
                     opacity: 1;
                     transform: translateY(0);
                 }
+
+                                /* =========================
+                   Mobile & Tablet Responsive
+                ========================= */
+                
+                                @media (max-width: 900px) {
+                
+                                    .topbar {
+                                        flex-direction: column;
+                                        gap: 15px;
+                                        text-align: center;
+                                    }
+                
+                                    .nav-links {
+                                        flex-wrap: wrap;
+                                        justify-content: center;
+                                    }
+                
+                                    .container {
+                                        grid-template-columns: 1fr;
+                                        padding: 15px;
+                                    }
+                
+                                    .welcome {
+                                        margin: 15px;
+                                        text-align: center;
+                                    }
+                
+                                    .input-label {
+                                        font-size: 20px;
+                                    }
+                                }
+                
+                                @media (max-width: 600px) {
+                
+                                    body {
+                                        font-size: 15px;
+                                    }
+                
+                                    .card {
+                                        padding: 16px;
+                                    }
+                
+                                    .card h2 {
+                                        font-size: 20px;
+                                    }
+                
+                                    button,
+                                    .zakat-btn,
+                                    .logout {
+                                        width: 100%;
+                                        padding: 14px;
+                                        font-size: 16px;
+                                    }
+                
+                                    .category-grid,
+                                    .dua-grid {
+                                        grid-template-columns: 1fr;
+                                    }
+                
+                                    .brand {
+                                        font-size: 22px;
+                                    }
+                
+                                    .nav-links {
+                                        flex-direction: column;
+                                        width: 100%;
+                                    }
+                
+                                    .nav-links a {
+                                        width: 100%;
+                                        text-align: center;
+                                        padding: 14px;
+                                        font-size: 16px;
+                                    }
+                
+                                    input,
+                                    select,
+                                    textarea {
+                                        font-size: 16px;
+                                    }
+                                }
