@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style-settings.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="settings-container">
+    
+        <h1>⚙️ Settings</h1>
+    
+        <div class="settings-card" onclick="account()">
+            <span>👤 Account</span>
+            <span>></span>
+        </div>
+    
+        <div class="settings-card">
+            <span>🔔 Prayer Notifications</span>
+            <span>Coming Soon</span>
+        </div>
+    
+        <div class="settings-card" onclick="changeLanguage()">
+            <span>🌍 Language</span>
+            <span id="languageText">English ></span>
+        </div>
+    
+        <div class="settings-card">
+            <span>📖 Qur'an Font Size</span>
+            <span>Medium</span>
+        </div>
+    
+        <div class="settings-card">
+            <span>ℹ️ About</span>
+            <span>Version 1.0</span>
+        </div>
+    
+        <a href="index.html" class="back-btn">
+            ← Back to Home
+        </a>
+    
+    </div>
+
+    <div id="languageModal" class="modal">
+    
+        <div class="modal-content">
+    
+            <h2>Language</h2>
+    
+            <select id="languageSelect">
+    
+                <option value="English">English</option>
+    
+            </select>
+    
+            <div class="modal-buttons">
+    
+                <button onclick="closeLanguage()">Cancel</button>
+    
+                <button onclick="saveLanguage()">Save</button>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+    <script>
+
+        function account(){
+            window.location.href = "account.html"
+        }
+
+        const user = JSON.parse(localStorage.getItem("user"));
+
+            
+
+            function changeLanguage() {
+
+                    document.getElementById("languageModal").classList.add("show");
+
+                }
+
+            function closeLanguage() {
+
+                document.getElementById("languageModal").classList.remove("show");
+
+            }
+
+            async function saveLanguage() {
+
+                const language =
+                    document.getElementById("languageSelect").value;
+
+                const response = await fetch("/api/change-language", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        id: user.userId,
+
+                        language
+
+                    })
+
+                });
+
+                const data = await response.json();
+
+                if (data.message === "Language updated") {
+
+                    document.getElementById("languageText").textContent =
+                        language + " >";
+
+                    closeLanguage();
+
+                } else {
+
+                    alert(data.message);
+
+                }
+
+            }
+
+            async function loadSettings() {
+
+                    const user = JSON.parse(localStorage.getItem("user"));
+
+                    console.log("Logged in user:", user);
+
+                    const response = await fetch(`/api/settings/${user.userId}`);
+
+                    console.log("Status:", response.status);
+
+                    const text = await response.text();
+
+                    console.log("Response:", text);
+
+                }
+
+                loadSettings();
+    </script>
+</body>
+</html>

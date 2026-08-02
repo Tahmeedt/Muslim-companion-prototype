@@ -3,6 +3,7 @@
 
 <head>
     <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <title>Muslim Companion</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -21,6 +22,10 @@
             <a href="#" onclick="showSection('duas')">Duas</a>
             <a href="#" onclick="showSection('zakat')">Zakat</a>
             <a href="#" onclick="showSection('allah')">99 Names</a>
+            <a href="settings.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
         </div>
 
         <button class="logout" onclick="logout()">Logout</button>
@@ -1096,18 +1101,18 @@ Reference: ${currentDua.reference}`;
 
         let cachedSurahs = null;
 
-            async function loadSurahs() {
-                if (cachedSurahs) {
-                    displaySurahs(cachedSurahs);
-                    return;
-                }
-
-                const res = await fetch("https://api.alquran.cloud/v1/surah");
-                const data = await res.json();
-
-                cachedSurahs = data.data;
+        async function loadSurahs() {
+            if (cachedSurahs) {
                 displaySurahs(cachedSurahs);
+                return;
             }
+
+            const res = await fetch("https://api.alquran.cloud/v1/surah");
+            const data = await res.json();
+
+            cachedSurahs = data.data;
+            displaySurahs(cachedSurahs);
+        }
 
         async function loadSurah(number, goToAyah = null) {
 
@@ -1393,20 +1398,20 @@ Reference: ${currentDua.reference}`;
         }
 
         function bookmarkAyah(surah, ayah) {
-                const exists = bookmarks.some(
-                    b => b.surah === surah && b.ayah === ayah
-                );
+            const exists = bookmarks.some(
+                b => b.surah === surah && b.ayah === ayah
+            );
 
-                if (exists) return alert("Already bookmarked");
+            if (exists) return alert("Already bookmarked");
 
-                bookmarks.push({
-                    surah,
-                    ayah,
-                    time: Date.now()
-                });
+            bookmarks.push({
+                surah,
+                ayah,
+                time: Date.now()
+            });
 
-                localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-            }
+            localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+        }
 
         window.onload = function () {
             showSection("home")
@@ -2032,28 +2037,28 @@ out center;
            NAVIGATION
         ======================= */
         function showSection(sectionId) {
-                const sections = document.querySelectorAll(".section");
+            const sections = document.querySelectorAll(".section");
 
-                sections.forEach(sec => {
-                    sec.classList.remove("active");
-                    sec.style.display = "none";
-                });
+            sections.forEach(sec => {
+                sec.classList.remove("active");
+                sec.style.display = "none";
+            });
 
-                const target = document.getElementById(sectionId);
+            const target = document.getElementById(sectionId);
 
-                if (target) {
-                    target.style.display = "block";
+            if (target) {
+                target.style.display = "block";
 
-                    // small delay so transition triggers properly
-                    setTimeout(() => {
-                        target.classList.add("active");
-                    }, 10);
-                }
-
-                if (sectionId === "quran") loadSurahs();
-                if (sectionId === "prayer") loadPrayerTracker();
-                if (sectionId === "allahNames") displayAllahNames();
+                // small delay so transition triggers properly
+                setTimeout(() => {
+                    target.classList.add("active");
+                }, 10);
             }
+
+            if (sectionId === "quran") loadSurahs();
+            if (sectionId === "prayer") loadPrayerTracker();
+            if (sectionId === "allahNames") displayAllahNames();
+        }
 
         function updatePrayerStreak() {
 

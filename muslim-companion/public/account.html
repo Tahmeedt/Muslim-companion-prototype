@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - Muslim Companion</title>
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="style-account.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="profile-card">
+
+            <div class="profile-image-container">
+
+                <img id="profileImage" src="https://placehold.co/140x140?text=%F0%9F%91%A4" alt="Profile">
+
+                <label for="imageUpload" class="camera-btn">
+                    📷
+                </label>
+
+                <input type="file" id="imageUpload" accept="image/*" hidden>
+
+            </div>
+
+            <h1 id="name">Loading...</h1>
+
+            <p id="email">Loading...</p>
+
+        </div>
+
+        <div class="account-card" onclick="editName()">
+            <span>✏️ Edit Name</span>
+            <span>></span>
+        </div>
+
+        <div class="account-card" onclick="changeEmail()">
+            <span>📧 Change Email</span>
+            <span>></span>
+        </div>
+
+        <div class="account-card" onclick="changePassword()">
+            <span>🔒 Change Password</span>
+            <span>></span>
+        </div>
+
+        <div class="account-card logout" onclick="logout()">
+            <span>🚪 Log Out</span>
+        </div>
+
+    </div>
+
+    <!-- Modal -->
+
+    <div id="editModal" class="modal">
+
+        <div class="modal-content">
+
+            <h2 id="modalTitle">Edit</h2>
+
+            <label id="modalLabel"></label>
+
+            <div id="singleInput">
+
+                <input type="text" id="modalInput" autocomplete="off">
+
+            </div>
+
+            <div id="passwordInputs" style="display:none;">
+
+                <label>Current Password</label>
+                <input type="password" id="currentPassword">
+
+                <label>New Password</label>
+                <input type="password" id="newPassword">
+
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword">
+
+            </div>
+
+            <p id="modalError" class="modal-error"></p>
+
+            <div class="modal-buttons">
+
+                <button class="cancel-btn" onclick="closeModal()">
+                    Cancel
+                </button>
+
+                <button class="save-btn" onclick="saveChanges()">
+                    Save
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        const editModal = document.getElementById("editModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalLabel = document.getElementById("modalLabel");
+        const modalInput = document.getElementById("modalInput");
+        const modalError = document.getElementById("modalError");
+
+        const currentPassword = document.getElementById("currentPassword");
+        const newPassword = document.getElementById("newPassword");
+        const confirmPassword = document.getElementById("confirmPassword");
+
+        let currentAction = "";
+
+        async function loadAccount() {
+
+                if (!user) {
+
+                    window.location.href = "/login.html";
+
+                    return;
+
+                }
+
+
+                const response = await fetch(`/api/user/${user.userId}`);
+
+
+                const data = await response.json();
+
+
+                if (response.ok) {
+
+                    document.getElementById("name").textContent = data.name;
+
+                    document.getElementById("email").textContent = data.email;
+
+
+                    user.name = data.name;
+
+                    user.email = data.email;
+
+
+                    localStorage.setItem("user", JSON.stringify(user));
+
+                }
+
+            }
+
+
+            loadAccount();
+
+        /* Profile Picture */
+
+        const imageUpload = document.getElementById("imageUpload");
+        const profileImage = document.getElementById("profileImage");
+
+        const savedImage = localStorage.getItem("profileImage");
+
+        if (savedImage) {
+
+            profileImage.src = savedImage;
+
+        }
+
+        imageUpload.addEventListener("change", function () {
+
+            const file = this.files[0];
+
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                profileImage.src = e.target.result;
+
+                localStorage.setItem("profileImage", e.target.result);
+
+            };
+
+            reader.readAsDataURL(file);
+
+        });
+
+        /* Name */
+
+        function editName() {
+
+            currentAction = "name";
+
+            document.getElementById("singleInput").style.display = "block";
+            document.getElementById("passwordInputs").style.display = "none";
+
+            modalTitle.textContent = "Edit Name";
+
+            modalLabel.textContent = "Display Name";
+
+            modalInput.type = "text";
+
+            modalInput.value = user.name;
+
+            modalError.textContent = "";
+
+            editModal.classList.add("show");
+
+            modalInput.focus();
+
+        }
+
+        /* Email */
+
+        function changeEmail() {
+
+            currentAction = "email";
+
+            document.getElementById("singleInput").style.display = "block";
+            document.getElementById("passwordInputs").style.display = "none";
+
+            modalTitle.textContent = "Change Email";
+
+            modalLabel.textContent = "Email Address";
+
+            modalInput.type = "email";
+
+            modalInput.value = user.email;
+
+            modalError.textContent = "";
+
+            editModal.classList.add("show");
+
+            modalInput.focus();
+
+        }
+
+        /* Password */
+
+        function changePassword() {
+
+            currentAction = "password";
+
+            document.getElementById("singleInput").style.display = "none";
+            document.getElementById("passwordInputs").style.display = "block";
+
+            modalTitle.textContent = "Change Password";
+
+            modalError.textContent = "";
+
+            currentPassword.value = "";
+            newPassword.value = "";
+            confirmPassword.value = "";
+
+            editModal.classList.add("show");
+
+        }
+
+        /* Close */
+
+        function closeModal() {
+
+            editModal.classList.remove("show");
+
+        }
+
+        /* Save */
+
+        async function saveChanges() {
+
+            if (currentAction === "name") {
+
+                const value = modalInput.value.trim();
+
+                if (value === "") {
+
+                    modalError.textContent = "Please enter a name.";
+
+                    return;
+
+                }
+
+                const response = await fetch("/api/change-name", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        id: user.userId,
+                        name: value
+                    })
+
+                });
+
+                const data = await response.json();
+
+                if (data.message !== "Name updated") {
+
+                    modalError.textContent = data.message;
+
+                    return;
+
+                }
+
+                user.name = value;
+
+                localStorage.setItem("user", JSON.stringify(user));
+
+                document.getElementById("name").textContent = value;
+
+            }
+
+            if (currentAction === "email") {
+
+                const value = modalInput.value.trim();
+
+                if (value === "") {
+
+                    modalError.textContent = "Please enter an email.";
+
+                    return;
+
+                }
+
+                const response = await fetch("/api/change-email", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        id: user.userId,
+                        email: value
+                    })
+
+                });
+
+                const data = await response.json();
+
+                if (data.message !== "Email updated") {
+
+                    modalError.textContent = data.message;
+
+                    return;
+
+                }
+
+                user.email = value;
+
+                localStorage.setItem("user", JSON.stringify(user));
+
+                document.getElementById("email").textContent = value;
+
+            }
+
+            if (currentAction === "password") {
+
+
+                if (newPassword.value.length < 8) {
+
+                    modalError.textContent =
+                        "Password must be at least 8 characters.";
+
+                    return;
+
+                }
+
+
+                if (newPassword.value !== confirmPassword.value) {
+
+                    modalError.textContent =
+                        "Passwords do not match.";
+
+                    return;
+
+                }
+
+
+                const response = await fetch("/api/change-password", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        id: user.userId,
+
+                        currentPassword: currentPassword.value,
+
+                        newPassword: newPassword.value
+
+                    })
+
+                });
+
+
+                const data = await response.json();
+
+
+                if (!response.ok || data.message !== "Password updated") {
+
+                    modalError.textContent = data.message;
+
+                    return;
+
+                }
+
+
+                alert("Password updated successfully!");
+
+            }
+
+
+                
+
+            closeModal();
+
+        }
+
+        /* Logout */
+
+        function logout() {
+
+            localStorage.removeItem("user");
+
+            window.location.href = "/login.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

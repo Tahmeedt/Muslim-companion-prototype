@@ -8,6 +8,7 @@ const db = new sqlite3.Database(
 
 // Create users table if it doesn't exist
 db.serialize(() => {
+
     db.run(`
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -16,6 +17,19 @@ db.serialize(() => {
             password TEXT
         )
     `);
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS user_settings (
+            user_id INTEGER PRIMARY KEY,
+            language TEXT DEFAULT 'English',
+            text_size TEXT DEFAULT 'Medium',
+            animations INTEGER DEFAULT 1,
+            auto_save INTEGER DEFAULT 1,
+
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    `);
+
 });
 
 // Test connection
