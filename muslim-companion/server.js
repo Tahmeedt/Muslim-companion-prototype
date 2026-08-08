@@ -26,37 +26,40 @@ app.post("/api/signup", (req, res) => {
         INSERT INTO users (name, email, password)
         VALUES (?, ?, ?)
     `;
+
     db.run(sql, [name, email, hashedPassword], function (err) {
+
         if (err) {
-            return res.json({ message: "Email already exists" });
-        }
-        // Create default settings for the new user
-        db.run(sql, [name, email, hashedPassword], function (err) {
-            if (err) {
+            console.log("SIGNUP ERROR:", err.message);
+
+            if (err.message.includes("UNIQUE constraint failed")) {
                 return res.json({ message: "Email already exists" });
             }
 
-            const userId = this.lastID;
+            return res.json({ message: "Account creation failed" });
+        }
 
-            db.run(
-                `
-        INSERT INTO user_settings (user_id)
-        VALUES (?)
-        `,
-                [userId],
-                (settingsErr) => {
-                    if (settingsErr) {
-                        console.log(settingsErr);
-                    }
+        const userId = this.lastID;
+
+        // Create default settings for the new user
+        db.run(
+            `
+            INSERT INTO user_settings (user_id)
+            VALUES (?)
+            `,
+            [userId],
+            (settingsErr) => {
+
+                if (settingsErr) {
+                    console.log("SETTINGS ERROR:", settingsErr.message);
                 }
-            );
+            }
+        );
 
-            res.json({
-                message: "Account created",
-                userId: userId
-            });
+        res.json({
+            message: "Account created",
+            userId: userId
         });
-
     });
 });
 
