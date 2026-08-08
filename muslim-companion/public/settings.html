@@ -1,121 +1,172 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="style-settings.css">
-    <title>Document</title>
+
+    <title>Settings</title>
+
 </head>
+
 <body>
+
     <div class="settings-container">
-    
+
         <h1>⚙️ Settings</h1>
-    
+
         <div class="settings-card" onclick="account()">
             <span>👤 Account</span>
             <span>></span>
         </div>
-    
+
         <div class="settings-card">
             <span>🔔 Prayer Notifications</span>
             <span>Coming Soon</span>
         </div>
-    
+
         <div class="settings-card" onclick="changeLanguage()">
             <span>🌍 Language</span>
             <span id="languageText">English ></span>
         </div>
-    
+
         <div class="settings-card">
             <span>📖 Qur'an Font Size</span>
             <span>Medium</span>
         </div>
-    
+
         <div class="settings-card">
             <span>ℹ️ About</span>
             <span>Version 1.0</span>
         </div>
-    
+
         <a href="index.html" class="back-btn">
             ← Back to Home
         </a>
-    
+
     </div>
+
+
+    <!-- LANGUAGE MODAL -->
 
     <div id="languageModal" class="modal">
-    
+
         <div class="modal-content">
-    
+
             <h2>Language</h2>
-    
+
             <select id="languageSelect">
-    
+
                 <option value="English">English</option>
-    
+                <option value="Arabic">Arabic</option>
+                <option value="Urdu">Urdu</option>
+
             </select>
-    
+
             <div class="modal-buttons">
-    
-                <button onclick="closeLanguage()">Cancel</button>
-    
-                <button onclick="saveLanguage()">Save</button>
-    
+
+                <button onclick="closeLanguage()">
+                    Cancel
+                </button>
+
+                <button onclick="saveLanguage()">
+                    Save
+                </button>
+
             </div>
-    
+
         </div>
-    
+
     </div>
+
+
     <script>
 
-        function account(){
-            window.location.href = "account.html"
+        function account() {
+            window.location.href = "account.html";
         }
 
+
+        // Get logged-in user
         const user = JSON.parse(localStorage.getItem("user"));
 
-            
 
-            function changeLanguage() {
+        // Open language window
+        function changeLanguage() {
 
-                    document.getElementById("languageModal").classList.add("show");
+            document
+                .getElementById("languageModal")
+                .classList.add("show");
 
-                }
+        }
 
-            function closeLanguage() {
 
-                document.getElementById("languageModal").classList.remove("show");
+        // Close language window
+        function closeLanguage() {
+
+            document
+                .getElementById("languageModal")
+                .classList.remove("show");
+
+        }
+
+
+        // Save language
+        async function saveLanguage() {
+
+            if (!user || !user.userId) {
+
+                alert("You are not logged in.");
+
+                return;
 
             }
 
-            async function saveLanguage() {
+            const language =
+                document.getElementById("languageSelect").value;
 
-                const language =
-                    document.getElementById("languageSelect").value;
 
-                const response = await fetch("/api/change-language", {
+            try {
 
-                    method: "POST",
+                const response = await fetch(
+                    "/api/change-language",
+                    {
+                        method: "POST",
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
 
-                    body: JSON.stringify({
+                        body: JSON.stringify({
+                            id: user.userId,
+                            language: language
+                        })
+                    }
+                );
 
-                        id: user.userId,
-
-                        language
-
-                    })
-
-                });
 
                 const data = await response.json();
 
+
+                console.log("Language response:", data);
+
+
                 if (data.message === "Language updated") {
 
+                    // Update the text on the settings page
                     document.getElementById("languageText").textContent =
                         language + " >";
+
+
+                    // Save locally as well
+                    localStorage.setItem(
+                        "selectedLanguage",
+                        language
+                    );
+
 
                     closeLanguage();
 
@@ -125,25 +176,73 @@
 
                 }
 
+            } catch (error) {
+
+                console.error("Language error:", error);
+
+                alert("Could not save language.");
+
             }
 
-            async function loadSettings() {
+        }
 
-                    const user = JSON.parse(localStorage.getItem("user"));
 
-                    console.log("Logged in user:", user);
+        // Load saved settings
+        async function loadSettings() {
 
-                    const response = await fetch(`/api/settings/${user.userId}`);
+            if (!user || !user.userId) {
 
-                    console.log("Status:", response.status);
+                console.log("No logged-in user.");
 
-                    const text = await response.text();
+                return;
 
-                    console.log("Response:", text);
+            }
+
+
+            try {
+
+                const response = await fetch(
+                    `/api/settings/${user.userId}`
+                );
+
+
+                const data = await response.json();
+
+
+                console.log("Settings:", data);
+
+
+                if (data.language) {
+
+                    // Show saved language
+                    document.getElementById("languageText").textContent =
+                        data.language + " >";
+
+
+                    // Select saved language in dropdown
+                    document.getElementById("languageSelect").value =
+                        data.language;
 
                 }
 
-                loadSettings();
+            } catch (error) {
+
+                console.error(
+                    "Could not load settings:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        // Load settings when page opens
+        loadSettings();
+
     </script>
+    ```
+
 </body>
+
 </html>

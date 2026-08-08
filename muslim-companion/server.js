@@ -314,78 +314,90 @@ app.post("/api/change-language", (req, res) => {
 
     const { id, language } = req.body;
 
-    if (!language || language.trim() === "") {
+    if (!id || !language) {
         return res.json({
-            message: "Language is required"
+            message: "User ID and language are required"
         });
     }
 
-    db.run(
-        `
-        UPDATE user_settings
-        SET language = ?
-        WHERE user_id = ?
-        `,
-        [language, id],
-        function (err) {
+    // Check if settings already exist
+    db.get(
+        "SELECT * FROM user_settings WHERE user_id = ?",
+        [id],
+        (err, settings) => {
 
             if (err) {
-                console.log(err);
-                return res.json({
+                console.log("SETTINGS CHECK ERROR:", err);
+
+                return res.status(500).json({
                     message: "Database error"
                 });
             }
 
-            if (this.changes === 0) {
-                return res.json({
-                    message: "Settings not found"
-                });
+            // If settings don't exist, create them
+            if (!settings) {
+
+                db.run(
+                    `
+                    INSERT INTO user_settings (user_id, language)
+                    VALUES (?, ?)
+                    `,
+                    [id, language],
+                    function (insertErr) {
+
+                        if (insertErr) {
+
+                            console.log(
+                                "SETTINGS CREATE ERROR:",
+                                insertErr
+                            );
+
+                            return res.status(500).json({
+                                message: "Could not create settings"
+                            });
+                        }
+
+                        console.log(
+                            "Settings created for user:",
+                            id
+                        );
+
+                        return res.json({
+                            message: "Language updated"
+                        });
+                    }
+                );
+
+                return;
             }
 
-            res.json({
-                message: "Language updated"
-            });
+            // Settings already exist, so update them
+            db.run(
+                `
+                UPDATE user_settings
+                SET language = ?
+                WHERE user_id = ?
+                `,
+                [language, id],
+                function (updateErr) {
 
-        }
-    );
+                    if (updateErr) {
 
-});
+                        console.log(
+                            "LANGUAGE UPDATE ERROR:",
+                            updateErr
+                        );
 
-app.post("/api/change-language", (req, res) => {
+                        return res.status(500).json({
+                            message: "Database error"
+                        });
+                    }
 
-    const { id, language } = req.body;
-
-    if (!language || language.trim() === "") {
-        return res.json({
-            message: "Language is required"
-        });
-    }
-
-    db.run(
-        `
-        UPDATE user_settings
-        SET language = ?
-        WHERE user_id = ?
-        `,
-        [language, id],
-        function (err) {
-
-            if (err) {
-                console.log(err);
-                return res.json({
-                    message: "Database error"
-                });
-            }
-
-            if (this.changes === 0) {
-                return res.json({
-                    message: "Settings not found"
-                });
-            }
-
-            res.json({
-                message: "Language updated"
-            });
+                    return res.json({
+                        message: "Language updated"
+                    });
+                }
+            );
 
         }
     );
