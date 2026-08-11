@@ -192,17 +192,96 @@
                 <p id="isha">--:--</p>
             </div>
 
-            <div class="card full-width">
+            <div class="card full-width prayer-tracker">
                 <h2>⭐ Prayer Tracker</h2>
-
-                <input type="checkbox" id="track-fajr">Fajr<br>
-                <input type="checkbox" id="track-dhuhr">Dhuhr<br>
-                <input type="checkbox" id="track-asr">Asr<br>
-                <input type="checkbox" id="track-maghrib">Maghrib<br>
-                <input type="checkbox" id="track-isha">Isha
-
-                <p id="trackerProgress">Today: 0 / 5 prayers completed</p>
+        
+                <div class="tracker-main">
+            
+                    <!-- Prayer Checkboxes -->
+                    <div class="prayer-list">
+            
+                        <label class="prayer-item">
+                            <input type="checkbox" id="track-fajr">
+                            <span class="custom-checkbox"></span>
+                            <span class="prayer-name">Fajr</span>
+                        </label>
+            
+                        <label class="prayer-item">
+                            <input type="checkbox" id="track-dhuhr">
+                            <span class="custom-checkbox"></span>
+                            <span class="prayer-name">Dhuhr</span>
+                        </label>
+            
+                        <label class="prayer-item">
+                            <input type="checkbox" id="track-asr">
+                            <span class="custom-checkbox"></span>
+                            <span class="prayer-name">Asr</span>
+                        </label>
+            
+                        <label class="prayer-item">
+                            <input type="checkbox" id="track-maghrib">
+                            <span class="custom-checkbox"></span>
+                            <span class="prayer-name">Maghrib</span>
+                        </label>
+            
+                        <label class="prayer-item">
+                            <input type="checkbox" id="track-isha">
+                            <span class="custom-checkbox"></span>
+                            <span class="prayer-name">Isha</span>
+                        </label>
+            
+                        <p id="trackerProgress">Today: 0 / 5 prayers completed</p>
+            
+                    </div>
+            
+                    <!-- Statistics -->
+                    <div class="prayer-statistics">
+            
+                        <div class="stat-box">
+                            <span class="stat-icon">🕌</span>
+                            <div>
+                                <span class="stat-label">Today</span>
+                                <strong id="statToday">0 / 5</strong>
+                            </div>
+                        </div>
+            
+                        <div class="stat-box">
+                            <span class="stat-icon">📈</span>
+                            <div>
+                                <span class="stat-label">Completion</span>
+                                <strong id="statCompletion">0%</strong>
+                            </div>
+                        </div>
+            
+                        <div class="stat-box">
+                            <span class="stat-icon">🔥</span>
+                            <div>
+                                <span class="stat-label">Current streak</span>
+                                <strong id="statStreak">0 days</strong>
+                            </div>
+                        </div>
+            
+                        <div class="stat-box">
+                            <span class="stat-icon">📅</span>
+                            <div>
+                                <span class="stat-label">This week</span>
+                                <strong id="statWeek">0 / 35</strong>
+                            </div>
+                        </div>
+            
+                    </div>
+            
+                </div>
+            
+                <!-- Chart -->
+                <div class="prayer-chart-section">
+                    <h3>Prayer Progress</h3>
+                    <canvas id="prayerChart"></canvas>
+                </div>
+            
             </div>
+
+
 
         </div>
     </div>
@@ -231,13 +310,7 @@
             <!-- RIGHT: READER -->
             <div class="card" style="grid-column:2 / -1; max-height:80vh; overflow:auto;">
                 <h2 id="surahTitle">Select a Surah</h2>
-                <div id="miniPlayer" style="
-                    padding:10px;
-                    margin-bottom:10px;
-                    border-radius:8px;
-                    background:#0F172A;
-                    display:none;
-                ">
+                <div id="miniPlayer">
                     <div id="nowPlaying">Not playing</div>
 
                     <button onclick="togglePlayPause()" style="
@@ -476,6 +549,7 @@
         </div>
     </div>
     <script src="allahNames.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
 
         /* =======================
@@ -1432,6 +1506,8 @@ Reference: ${currentDua.reference}`;
                 localStorage.removeItem("goToAyah");
             }
             loadPrayerTracker();
+            updatePrayerChart();
+            updatePrayerStatistics();
             loadContinueReading();
             loadNearestMosque();
             loadQiblaDirection();
@@ -1488,7 +1564,9 @@ Reference: ${currentDua.reference}`;
 
                     localStorage.setItem("prayerData", JSON.stringify(updated));
 
-                    updatePrayerProgress(); // 🔥 refresh UI immediately
+                    updatePrayerProgress();
+                    saveTodayToHistory();
+                    updatePrayerStatistics();
                 };
             });
 
@@ -1511,7 +1589,6 @@ Reference: ${currentDua.reference}`;
                 percent: (done / prayers.length) * 100
             };
         }
-
         function updatePrayerProgress() {
 
             const progress = getPrayerProgress();
@@ -1550,7 +1627,7 @@ Reference: ${currentDua.reference}`;
             text.innerHTML = `
         📖 Surah ${latest.surah}<br>
         🔢 Ayah ${latest.ayah}<br><br>
-        <span style="color:#22C55E;">Continue where you left off →</span>
+        <span style="color:#22C55E;">Continue where you left off →</span>L;
     `;
         }
         function continueReading() {
@@ -1834,15 +1911,21 @@ out center;
 
                 const direction = bearingToCompass(bearing);
 
-                document.getElementById("qiblaDirection").innerHTML = `
-            <div style="font-size:32px;font-weight:bold;color:#22C55E;">
-                ${direction}
-            </div>
+                const distance = calculateDistanceToKaaba(lat, lon);
 
-            <div style="margin-top:8px;">
-                ${bearing.toFixed(1)}°
-            </div>
-        `;
+                document.getElementById("qiblaDirection").innerHTML = `
+    <div style="font-size:32px;font-weight:bold;color:#22C55E;">
+        ${direction}
+    </div>
+
+    <div style="margin-top:8px;">
+        ${bearing.toFixed(1)}° from True North
+    </div>
+
+    <div style="margin-top:12px;font-size:16px;">
+        📍 ${distance.toFixed(0)} km from the Kaaba
+    </div>
+`;
 
             }, () => {
 
@@ -1873,6 +1956,32 @@ out center;
 
             return bearing;
         }
+
+        function calculateDistanceToKaaba(lat, lon) {
+                const kaabaLat = 21.4225;
+                const kaabaLon = 39.8262;
+
+                const R = 6371; // Earth radius in km
+
+                const dLat = (kaabaLat - lat) * Math.PI / 180;
+                const dLon = (kaabaLon - lon) * Math.PI / 180;
+
+                const lat1 = lat * Math.PI / 180;
+                const lat2 = kaabaLat * Math.PI / 180;
+
+                const a =
+                    Math.sin(dLat / 2) ** 2 +
+                    Math.cos(lat1) *
+                    Math.cos(lat2) *
+                    Math.sin(dLon / 2) ** 2;
+
+                const c = 2 * Math.atan2(
+                    Math.sqrt(a),
+                    Math.sqrt(1 - a)
+                );
+
+                return R * c;
+            }
 
         function bearingToCompass(bearing) {
 
@@ -2116,6 +2225,227 @@ out center;
     `;
         }
 
+            document.getElementById("miniPlayer").addEventListener(function () {
+                    this.classList.toggle("active");
+                });
+
+    </script>
+    <script>
+
+        function saveTodayToHistory() {
+                const today = new Date().toDateString();
+                const progress = getPrayerProgress();
+
+                let history = JSON.parse(localStorage.getItem("prayerHistory")) || {};
+
+                history[today] = progress.done;
+
+                // Keep only the most recent 7 days
+                const dates = Object.keys(history);
+
+                if (dates.length > 7) {
+                    dates
+                        .sort((a, b) => new Date(a) - new Date(b))
+                        .slice(0, dates.length - 7)
+                        .forEach(date => delete history[date]);
+                }
+
+                localStorage.setItem("prayerHistory", JSON.stringify(history));
+
+                updatePrayerChart();
+            }
+
+            let prayerChart;
+
+            function updatePrayerChart() {
+                const canvas = document.getElementById("prayerChart");
+
+                if (!canvas) return;
+
+                const history =
+                    JSON.parse(localStorage.getItem("prayerHistory")) || {};
+
+                const today = new Date();
+
+                const labels = [];
+                const values = [];
+
+                for (let i = 6; i >= 0; i--) {
+                    const date = new Date(today);
+                    date.setDate(today.getDate() - i);
+
+                    const dateKey = date.toDateString();
+
+                    labels.push(
+                        date.toLocaleDateString("en-GB", {
+                            weekday: "short"
+                        })
+                    );
+
+                    values.push(history[dateKey] || 0);
+                }
+
+                if (prayerChart) {
+                    prayerChart.destroy();
+                }
+
+                prayerChart = new Chart(canvas, {
+                    type: "bar",
+
+                    data: {
+                        labels: labels,
+
+                        datasets: [{
+                            label: "Prayers completed",
+                            data: values,
+
+                            backgroundColor: "rgba(34, 197, 94, 0.75)",
+                            hoverBackgroundColor: "rgba(34, 197, 94, 0.95)",
+
+                            borderColor: "rgba(34, 197, 94, 1)",
+                            borderWidth: 1,
+
+                            borderRadius: 10,
+                            borderSkipped: false,
+
+                            barPercentage: 0.65,
+                            categoryPercentage: 0.75
+                        }]
+                    },
+
+                    options: {
+                        responsive: true,
+
+                        maintainAspectRatio: false,
+
+                        animation: {
+                            duration: 800,
+                            easing: "easeOutQuart"
+                        },
+
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+
+                            tooltip: {
+                                backgroundColor: "#0f172a",
+                                titleColor: "#ffffff",
+                                bodyColor: "#e2e8f0",
+
+                                padding: 12,
+                                cornerRadius: 10,
+
+                                displayColors: false,
+
+                                callbacks: {
+                                    label: function (context) {
+                                        return `${context.parsed.y} / 5 prayers completed`;
+                                    }
+                                }
+                            }
+                        },
+
+                        scales: {
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+
+                                border: {
+                                    display: false
+                                },
+
+                                ticks: {
+                                    color: "#64748b",
+                                    font: {
+                                        size: 13,
+                                        weight: "500"
+                                    }
+                                }
+                            },
+
+                            y: {
+                                beginAtZero: true,
+                                max: 5,
+
+                                ticks: {
+                                    stepSize: 1,
+                                    color: "#64748b",
+                                    font: {
+                                        size: 12
+                                    }
+                                },
+
+                                grid: {
+                                    color: "rgba(148, 163, 184, 0.15)",
+                                    drawBorder: false
+                                },
+
+                                border: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function updatePrayerStatistics() {
+                    const progress = getPrayerProgress();
+const completed = progress.done;
+const total = progress.total;
+
+// Today's statistics
+const percentage = Math.round((completed / total) * 100);
+
+document.getElementById("statToday").textContent =
+    `${ completed } / ${total}`;
+
+                    document.getElementById("statCompletion").textContent =
+                        `${percentage}%`;
+
+                    // Get prayer history
+                    const history =
+                        JSON.parse(localStorage.getItem("prayerHistory")) || {};
+
+                    const today = new Date();
+
+                    // Calculate this week's total
+                    let weekTotal = 0;
+
+                    for (let i = 0; i < 7; i++) {
+                        const date = new Date(today);
+                        date.setDate(today.getDate() - i);
+
+                        const dateKey = date.toDateString();
+
+                        weekTotal += history[dateKey] || 0;
+                    }
+
+                    document.getElementById("statWeek").textContent =
+                        `${weekTotal} / 35`;
+
+                    // Calculate current streak
+                    let streak = 0;
+
+                    for (let i = 0; i < 365; i++) {
+                        const date = new Date(today);
+                        date.setDate(today.getDate() - i);
+
+                        const dateKey = date.toDateString();
+
+                        if ((history[dateKey] || 0) === 5) {
+                            streak++;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    document.getElementById("statStreak").textContent =
+                        `${streak} ${streak === 1 ? "day" : "days"}`;
+
+}
 
     </script>
 
