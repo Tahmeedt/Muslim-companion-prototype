@@ -9,7 +9,6 @@
 </head>
 
 <body>
-
     <!-- TOP BAR -->
     <div class="topbar">
 
@@ -150,6 +149,24 @@
 
         </div>
 
+    </div>
+
+    <div id="modeSwitcher" class="collapsed">
+    
+        <button id="modeToggle" class="mode-toggle">
+            >>>
+        </button>
+    
+        <div class="mode-options">
+            <button onclick="window.location.href='index.html'">
+                ☪ Companion
+            </button>
+    
+            <button onclick="window.location.href='education.html'">
+                🎓 Education
+            </button>
+        </div>
+    
     </div>
 
     <!-- PRAYER -->
@@ -2225,8 +2242,21 @@ out center;
     `;
         }
 
-            document.getElementById("miniPlayer").addEventListener(function () {
+            document.getElementById("miniPlayer").addEventListener("click", function () {
                     this.classList.toggle("active");
+                });
+
+            const modeSwitcher = document.getElementById("modeSwitcher");
+                const modeToggle = document.getElementById("modeToggle");
+
+                modeToggle.addEventListener("click", function () {
+                    modeSwitcher.classList.toggle("collapsed");
+
+                    if (modeSwitcher.classList.contains("collapsed")) {
+                        modeToggle.textContent = ">>>";
+                    } else {
+                        modeToggle.textContent = "<<<";
+                    }
                 });
 
     </script>

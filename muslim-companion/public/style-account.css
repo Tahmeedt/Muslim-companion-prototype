@@ -515,3 +515,18 @@ body {
     margin-bottom: 15px;
 
 }
+
+.back-btn {
+    width: 100%;
+    margin-top: 35px;
+    justify-content: center;
+    background: #0B6B3A;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.back-btn:hover {
+    background: #22C55E;
+}

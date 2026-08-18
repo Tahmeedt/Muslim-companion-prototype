@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <title>Course | Muslim Companion</title>
+
+    <link rel="stylesheet" href="style-courses.css">
+
+</head>
+
+<body>
+
+
+    <!-- ================================
+         TOP BAR
+    ================================= -->
+
+    <div class="topbar">
+
+        <div class="brand">
+            🕌 Muslim Companion
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="/education.html">
+                Home
+            </a>
+
+            <a href="index.html" class="active">
+                Courses
+            </a>
+
+        </div>
+
+
+        <button class="logout" onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+
+
+    <!-- ================================
+         COURSE PAGE
+    ================================= -->
+
+    <main class="course-page">
+
+
+        <!-- Course Header -->
+
+        <section class="course-header">
+        
+            <div class="course-header-icon">
+                <i id="courseIcon" class="fa-solid fa-book-open"></i>
+            </div>
+        
+            <div class="course-header-info">
+        
+                <span id="courseCategory" class="course-category">
+                    COURSE
+                </span>
+        
+                <h1 id="courseTitle">
+                    Loading...
+                </h1>
+        
+                <p id="courseDescription">
+                    Loading course...
+                </p>
+        
+            </div>
+        
+        </section>
+
+
+
+        <!-- ================================
+             COURSE PROGRESS
+        ================================= -->
+
+        <section class="course-progress">
+
+            <div class="progress-heading">
+
+                <div>
+
+                    <span>
+                        COURSE PROGRESS
+                    </span>
+
+                    <h2 id="progressText">
+                        0% Complete
+                    </h2>
+
+                    <div id="progressDetails" class="progress-details">
+                        Lessons: 0/0 · Quizzes: 0/0
+                    </div>
+
+                    <div id="courseCompleted" class="course-completed">
+                    
+                        <div class="completion-icon">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                    
+                        <div class="completion-content">
+                    
+                            <span class="completion-label">
+                                COURSE COMPLETE
+                            </span>
+                    
+                            <h3>
+                                Well done!
+                            </h3>
+                    
+                            <p>
+                                You have completed this course.
+                            </p>
+                    
+                            <span id="courseCompletedDate" class="completion-date">
+                                Completed on ...
+                            </span>
+                    
+                        </div>
+                    
+                    </div>
+
+                </div>
+
+
+                <div id="progressNumber" class="progress-number">
+                    0%
+                </div>
+
+            </div>
+
+
+            <div class="course-progress-bar">
+
+                <div id="progressFill" class="course-progress-fill"></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================
+             LESSONS
+        ================================= -->
+
+        <section class="lessons-section">
+        
+            <div class="section-heading">
+        
+                <h2>Course Lessons</h2>
+        
+                <span>
+                    Complete each lesson to continue your journey.
+                </span>
+        
+            </div>
+        
+            <div id="lessonList" class="lesson-list">
+                <!-- Lessons will be added by JavaScript -->
+            </div>
+        
+        </section>
+
+        <!-- =================================
+             FINAL COURSE QUIZ
+        ================================= -->
+        
+        <section id="finalQuizSection" class="final-quiz-section">
+        
+            <div class="section-heading">
+        
+                <h2>
+                    <i class="fa-solid fa-trophy"></i>
+                    Final Course Quiz
+                </h2>
+        
+                <span>
+                    Test what you've learned throughout this course.
+                </span>
+        
+            </div>
+        
+            <div id="finalQuizQuestions" class="final-quiz-questions">
+                <!-- Questions added by JavaScript -->
+            </div>
+        
+            <button id="submitFinalQuiz" class="final-quiz-button">
+                <i class="fa-solid fa-check"></i>
+                Submit Final Quiz
+            </button>
+        
+            <div id="finalQuizResult" class="final-quiz-result"></div>
+        
+        </section>
+
+
+
+        <!-- ================================
+             BACK TO COURSES
+        ================================= -->
+
+        <a href="index.html" class="back-courses">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Courses
+
+        </a>
+
+
+    </main>
+
+
+
+    <!-- ================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script src="/data/courses.js"></script>
+
+    <script>
+
+        function logout() {
+                localStorage.removeItem("user");
+                window.location.href = "/login.html";
+            }
+
+            /* =================================
+               GET COURSE FROM URL
+            ================================= */
+
+            const params =
+                new URLSearchParams(window.location.search);
+
+            const courseId =
+                params.get("course");
+
+            let course = null;
+
+                for (const level in courses) {
+
+                    const levelCourses = courses[level];
+
+                    const foundCourse =
+                        levelCourses.find(
+                            item => item.id === courseId
+                        );
+
+                    if (foundCourse) {
+
+                        course = foundCourse;
+
+                        break;
+
+                    }
+
+                }
+
+
+            /* =================================
+       DISPLAY COURSE
+    ================================= */
+
+                if (!course) {
+
+                    document.getElementById("courseTitle")
+                        .textContent = "Course Not Found";
+
+                    document.getElementById("courseDescription")
+                        .textContent =
+                        "The course you are looking for could not be found.";
+
+                } else {
+
+                    /* =================================
+                       COURSE INFORMATION
+                    ================================= */
+
+                    document.getElementById("courseTitle")
+                        .textContent = course.title;
+
+                    document.getElementById("courseCategory")
+                        .textContent = course.category;
+
+                    document.getElementById("courseDescription")
+                        .textContent = course.description;
+
+
+                    /* Course icon */
+
+                    document.getElementById("courseIcon")
+                        .className =
+                        "fa-solid " + course.icon;
+
+
+
+                    /* =================================
+                       LOAD COURSE PROGRESS
+                    ================================= */
+
+                    async function loadCourseProgress() {
+
+                        const storedUser =
+                            localStorage.getItem("user");
+
+                        if (!storedUser) {
+
+                            console.log("No logged-in user found.");
+
+                            return [];
+
+                        }
+
+
+                        const user =
+                            JSON.parse(storedUser);
+
+                        const userId =
+                            user.userId;
+
+
+                        try {
+
+                            const response =
+                                await fetch(
+                                    `/api/course-progress/${userId}/${courseId}`
+                                );
+
+
+                            const data =
+                                await response.json();
+
+
+                            return data.completedLessons || [];
+
+
+                        } catch (error) {
+
+                            console.error(
+                                "Failed to load course progress:",
+                                error
+                            );
+
+                            return [];
+
+                        }
+
+                    }
+
+                    async function loadQuizProgress() {
+
+                        const storedUser =
+                            localStorage.getItem("user");
+
+
+                        if (!storedUser) {
+
+                            console.log(
+                                "No logged-in user found."
+                            );
+
+                            return [];
+
+                        }
+
+
+                        const user =
+                            JSON.parse(storedUser);
+
+
+                        const userId =
+                            user.userId;
+
+
+                        try {
+
+                            const response =
+                                await fetch(
+                                    `/api/quiz-progress/${userId}/${courseId}`
+                                );
+
+
+                            const data =
+                                await response.json();
+
+
+                            return data.completedQuizzes || [];
+
+
+                        } catch (error) {
+
+                            console.error(
+                                "Failed to load quiz progress:",
+                                error
+                            );
+
+
+                            return [];
+
+                        }
+
+                    }
+
+                    async function loadFinalQuizProgress() {
+
+                        const storedUser =
+                            localStorage.getItem("user");
+
+                        if (!storedUser) {
+                            console.log("No logged-in user found.");
+                            return false;
+                        }
+
+                        const user =
+                            JSON.parse(storedUser);
+
+                        const userId =
+                            user.userId;
+
+                        try {
+
+                            const response =
+                                await fetch(
+                                    `/api/final-quiz-progress/${userId}/${courseId}`
+                                );
+
+                            const data =
+                                await response.json();
+
+                            return {
+                                completed: data.completed === true,
+                                completedAt: data.completedAt
+                            };
+
+                        } catch (error) {
+
+                            console.error(
+                                "Failed to load final quiz progress:",
+                                error
+                            );
+
+                            return false;
+
+                        }
+
+                    }
+
+
+
+                    /* =================================
+                       DISPLAY LESSONS + PROGRESS
+                    ================================= */
+
+                    async function displayLessons() {
+
+                        const lessonList =
+                            document.getElementById("lessonList");
+
+
+                        const completedLessons =
+                            await loadCourseProgress();
+
+                        const completedQuizzes =
+                            await loadQuizProgress();
+
+                        const finalQuizProgress =
+                            await loadFinalQuizProgress();
+
+                        const finalQuizCompleted =
+                            finalQuizProgress.completed;
+
+                        const totalLessons =
+                            course.lessons.length; 
+
+                        const completedLessonCount =
+                            completedLessons.length;
+
+                        const completedQuizCount =
+                            completedQuizzes.length;
+
+                        const totalRequirements =
+                            totalLessons * 2;
+
+                        const completedRequirements =
+                            completedLessonCount +
+                            completedQuizCount;
+
+                        const overallPercentage =
+                            totalRequirements === 0
+                                ? 0
+                                : Math.round(
+                                    (completedRequirements / totalRequirements) * 100
+                                );
+
+                        const percentage =
+                            overallPercentage;
+
+
+                        /* =================================
+                           UPDATE PROGRESS
+                        ================================= */
+
+                        document.getElementById("progressText")
+                            .textContent =
+                            `${percentage}% Complete`;
+
+
+                        document.getElementById("progressNumber")
+                            .textContent =
+                            `${percentage}%`;
+
+
+                        document.getElementById("progressFill")
+                            .style.width =
+                            `${percentage}%`;
+
+                        document.getElementById("progressDetails")
+                            .textContent =
+                            `Lessons: ${completedLessonCount}/${totalLessons} · Quizzes: ${completedQuizCount}/${totalLessons}`;
+
+                        const courseCompleted =
+                            completedLessonCount === totalLessons &&
+                            completedQuizCount === totalLessons &&
+                            finalQuizCompleted;
+
+
+                        const completedElement =
+                            document.getElementById("courseCompleted");
+
+
+                        if (courseCompleted) {
+
+                            completedElement.style.display = "flex";
+
+                            const completedDate =
+                                document.getElementById("courseCompletedDate");
+
+                            if (
+                                completedDate &&
+                                finalQuizProgress.completedAt
+                            ) {
+
+                                const date =
+                                    new Date(finalQuizProgress.completedAt);
+
+                                completedDate.textContent =
+                                    `Completed on ${date.toLocaleDateString(
+                                        "en-GB",
+                                        {
+                                            day: "numeric",
+                                            month: "long",
+                                            year: "numeric"
+                                        }
+                                    )}`;
+
+                            }
+
+                        } else {
+
+                            completedElement.style.display = "none";
+
+                        }
+
+
+                        /* =================================
+                           CLEAR LESSONS
+                        ================================= */
+
+                        lessonList.innerHTML = "";
+
+
+
+                        /* =================================
+                           CREATE LESSON CARDS
+                        ================================= */
+
+                        course.lessons.forEach((lesson, index) => {
+
+                            const lessonNumber =
+                                index + 1;
+
+
+                            const completed =
+                                completedLessons.includes(lessonNumber);
+
+                            const quizCompleted =
+                                completedQuizzes.includes(lessonNumber);
+
+
+                            const lessonCard =
+                                document.createElement("a");
+
+
+                            lessonCard.className =
+                                "lesson-card";
+
+
+                            lessonCard.href =
+                                `lesson.html?course=${courseId}&lesson=${lessonNumber}`;
+
+
+                            /* Add completed class */
+
+                            if (completed) {
+
+                                lessonCard.classList.add("completed");
+
+                            }
+
+
+                            lessonCard.innerHTML = `
+
+                <div class="lesson-number">
+
+                    ${completed
+                                    ? '<i class="fa-solid fa-check"></i>'
+                                    : lessonNumber
+                                }
+
+                </div>
+
+
+                <div class="lesson-info">
+
+                    <span>
+                        LESSON ${lessonNumber}
+                    </span>
+
+                    <h3>
+                        ${lesson.title}
+                    </h3>
+
+                    <p>
+                        ${lesson.description}
+                    </p>
+
+                </div>
+
+
+                <div class="lesson-status">
+
+                    ${completed && quizCompleted
+                                    ? '<span class="completed-label">Lesson + Quiz ✓</span>'
+                                    : completed
+                                        ? '<span class="completed-label">Lesson ✓</span>'
+                                        : quizCompleted
+                                            ? '<span class="completed-label">Quiz ✓</span>'
+                                            : '<i class="fa-solid fa-arrow-right"></i>'
+}
+                </div>
+
+            `;
+
+
+                            lessonList.appendChild(lessonCard);
+
+                        });
+
+                    }
+
+
+
+                    /* =================================
+                       START
+                    ================================= */
+
+                    displayLessons();
+
+                    /* =================================
+   FINAL COURSE QUIZ
+================================= */
+
+                    const finalQuizSection =
+                        document.getElementById("finalQuizSection");
+
+                    const finalQuizQuestions =
+                        document.getElementById("finalQuizQuestions");
+
+                    const submitFinalQuiz =
+                        document.getElementById("submitFinalQuiz");
+
+                    const finalQuizResult =
+                        document.getElementById("finalQuizResult");
+
+
+                    if (course && course.finalQuiz && course.finalQuiz.length > 0) {
+
+                        course.finalQuiz.forEach((question, questionIndex) => {
+
+                            const questionDiv =
+                                document.createElement("div");
+
+                            questionDiv.className =
+                                "final-quiz-question";
+
+                            questionDiv.innerHTML = `
+
+            <h3>
+                ${questionIndex + 1}. ${question.question}
+            </h3>
+
+            <div class="final-quiz-options">
+
+                ${question.options.map((option, optionIndex) => `
+
+                    <label class="final-quiz-option">
+
+                        <input
+                            type="radio"
+                            name="final-question-${questionIndex}"
+                            value="${optionIndex}"
+                        >
+
+                        <span>
+                            ${option}
+                        </span>
+
+                    </label>
+
+                `).join("")}
+
+            </div>
+
+        `;
+
+                            finalQuizQuestions.appendChild(questionDiv);
+
+                        });
+
+                        submitFinalQuiz.addEventListener("click", async function () {
+
+                            let score = 0;
+                            let answered = 0;
+
+                            course.finalQuiz.forEach((question, questionIndex) => {
+
+                                const selected =
+                                    document.querySelector(
+                                        `input[name="final-question-${questionIndex}"]:checked`
+                                    );
+
+                                if (selected) {
+
+                                    answered++;
+
+                                    if (
+                                        Number(selected.value) === question.answer
+                                    ) {
+                                        score++;
+                                    }
+
+                                }
+
+                            });
+
+
+                            /* Make sure every question was answered */
+
+                            if (answered < course.finalQuiz.length) {
+
+                                finalQuizResult.textContent =
+                                    "Please answer every question.";
+
+                                return;
+
+                            }
+
+
+                            /* Check score */
+
+                            if (score === course.finalQuiz.length) {
+
+                                finalQuizResult.textContent =
+                                    `🎉 Excellent! You got ${score}/${course.finalQuiz.length} correct!`;
+
+                                finalQuizResult.classList.add("success");
+
+
+                                /* =================================
+                                   SAVE FINAL QUIZ
+                                ================================= */
+
+                                const storedUser =
+                                    localStorage.getItem("user");
+
+                                if (!storedUser) {
+
+                                    console.log("No logged-in user found.");
+
+                                    return;
+
+                                }
+
+
+                                const user =
+                                    JSON.parse(storedUser);
+
+                                const userId =
+                                    user.userId;
+
+
+                                try {
+
+                                    const response =
+                                        await fetch("/api/final-quiz-complete", {
+
+                                            method: "POST",
+
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+
+                                            body: JSON.stringify({
+                                                userId: userId,
+                                                courseId: courseId
+                                            })
+
+                                        });
+
+
+                                    const data =
+                                        await response.json();
+
+
+                                    console.log(
+                                        "Final quiz progress saved:",
+                                        data
+                                    );
+
+                                    if (response.ok && data.completed) {
+
+                                        const completedElement =
+                                            document.getElementById("courseCompleted");
+
+                                        if (completedElement) {
+                                            completedElement.style.display = "flex";
+                                        }
+
+                                    }
+
+                                    document.getElementById("progressText")
+                                        .textContent = "100% Complete";
+
+                                    document.getElementById("progressNumber")
+                                        .textContent = "100%";
+
+                                    document.getElementById("progressFill")
+                                        .style.width = "100%";
+
+                                    document.getElementById("progressDetails")
+                                        .textContent =
+                                        `Lessons: ${course.lessons.length}/${course.lessons.length} · Quizzes: ${course.lessons.length}/${course.lessons.length}`;
+
+                                    if (response.ok && data.completed) {
+
+                                        const completedElement =
+                                            document.getElementById("courseCompleted");
+
+                                        if (completedElement) {
+                                            completedElement.style.display = "flex";
+                                        }
+
+                                    }
+
+
+                                    if (!response.ok) {
+
+                                        console.error(
+                                            "Failed to save final quiz:",
+                                            data
+                                        );
+
+                                        return;
+
+                                    }
+
+
+                                } catch (error) {
+
+                                    console.error(
+                                        "Error saving final quiz:",
+                                        error
+                                    );
+
+                                }
+
+                            } else {
+
+                                finalQuizResult.textContent =
+                                    `You got ${score}/${course.finalQuiz.length} correct. Try again!`;
+
+                                finalQuizResult.classList.remove("success");
+
+                            }
+
+                        });
+
+                    } else {
+
+                        finalQuizSection.style.display = "none";
+
+                    }
+
+                    submitFinalQuiz.addEventListener("click", function () {
+
+                        if (!course || !course.finalQuiz) {
+                            return;
+                        }
+
+                        let score = 0;
+                        let answered = 0;
+
+                        course.finalQuiz.forEach((question, questionIndex) => {
+
+                            const selected =
+                                document.querySelector(
+                                    `input[name="final-question-${questionIndex}"]:checked`
+                                );
+
+                            if (selected) {
+
+                                answered++;
+
+                                if (
+                                    Number(selected.value) ===
+                                    question.answer
+                                ) {
+
+                                    score++;
+
+                                }
+
+                            }
+
+                        });
+
+
+                        if (answered < course.finalQuiz.length) {
+
+                            finalQuizResult.textContent =
+                                "Please answer every question.";
+
+                            return;
+
+                        }
+
+
+                        if (score === course.finalQuiz.length) {
+
+                            finalQuizResult.textContent =
+                                `🎉 Excellent! You got ${score}/${course.finalQuiz.length} correct.`;
+
+                        } else {
+
+                            finalQuizResult.textContent =
+                                `You got ${score}/${course.finalQuiz.length} correct. Try again!`;
+
+                        }
+
+                    });
+
+                }
+    </script>
+
+</body>
+
+</html>

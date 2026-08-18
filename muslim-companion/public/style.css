@@ -785,3 +785,83 @@ MOBILE
            grid-template-columns: 1fr;
        }
    }
+
+   /* ================================
+MODE SWITCHER
+================================ */
+
+   #modeSwitcher {
+       position: fixed;
+       bottom: 25px;
+       left: 0;
+       z-index: 1000;
+
+       padding: 10px;
+
+       background: #0F172A;
+       border-radius: 0 8px 8px 0;
+
+       opacity: 0.85;
+
+       transform: translateX(0);
+       transition: transform 0.35s ease, opacity 0.2s ease;
+   }
+
+   /* Collapsed - move the panel into the left wall */
+   #modeSwitcher.collapsed {
+       transform: translateX(-100%);
+   }
+
+   /* Become solid when hovered */
+   #modeSwitcher:hover {
+       opacity: 1;
+   }
+
+   /* Toggle button */
+   .mode-toggle {
+       position: absolute;
+
+       right: -42px;
+       top: 50%;
+
+       transform: translateY(-50%);
+
+       padding: 10px 8px;
+
+       background: #0F172A;
+       color: white;
+
+       border-radius: 0 8px 8px 0;
+
+       font-size: 16px;
+       font-weight: bold;
+
+       cursor: pointer;
+   }
+
+   /* Stop the global button hover animation */
+   .mode-toggle:hover {
+       transform: translateY(-50%);
+   }
+
+   /* Mode buttons */
+   .mode-options {
+       display: flex;
+       flex-direction: column;
+       gap: 8px;
+   }
+
+   .mode-options button {
+       min-width: 140px;
+
+       background: #1E293B;
+       color: white;
+
+       padding: 10px 14px;
+       border-radius: 8px;
+   }
+
+   .mode-options button:hover {
+       background: #0B6B3A;
+       transform: none;
+   }

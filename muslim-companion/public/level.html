@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Choose Your Level</title>
+    <link rel="stylesheet" href="style-level.css">
+</head>
+
+<body>
+
+    <main class="level-page">
+
+        <div class="level-container">
+
+            <div class="level-header">
+                <span class="level-label">EDUCATION MODE</span>
+
+                <h1>Choose Your Level</h1>
+
+                <p>
+                    Tell us about your current knowledge so we can recommend
+                    the right learning path for you.
+                </p>
+            </div>
+
+
+            <div class="level-options">
+
+                <button class="level-card" data-level="Beginner">
+
+                    <div class="level-icon">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+
+                    <div class="level-info">
+                        <h2>Beginner</h2>
+                        <p>
+                            Start with the foundations and essential concepts
+                            of Islamic knowledge.
+                        </p>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right level-arrow"></i>
+
+                </button>
+
+
+                <button class="level-card" data-level="Intermediate">
+
+                    <div class="level-icon">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+
+                    <div class="level-info">
+                        <h2>Intermediate</h2>
+                        <p>
+                            Build on what you already know and explore topics
+                            in greater depth.
+                        </p>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right level-arrow"></i>
+
+                </button>
+
+
+                <button class="level-card" data-level="Advanced">
+
+                    <div class="level-icon">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+
+                    <div class="level-info">
+                        <h2>Advanced</h2>
+                        <p>
+                            Explore more detailed and challenging areas of
+                            Islamic knowledge.
+                        </p>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right level-arrow"></i>
+
+                </button>
+
+            </div>
+
+
+            <button class="continue-level" id="continueLevel" disabled>
+                Continue
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        let selectedLevel = null;
+
+        const levelCards = document.querySelectorAll(".level-card");
+        const continueButton = document.getElementById("continueLevel");
+
+        levelCards.forEach(card => {
+
+            card.addEventListener("click", () => {
+
+                levelCards.forEach(item => {
+                    item.classList.remove("selected");
+                });
+
+                card.classList.add("selected");
+
+                selectedLevel = card.dataset.level;
+
+                continueButton.disabled = false;
+
+            });
+
+        });
+
+
+        continueButton.addEventListener("click", () => {
+
+            if (!selectedLevel) return;
+
+            const storedUser = localStorage.getItem("user");
+
+            if (!storedUser) {
+                alert("You need to be logged in.");
+                return;
+            }
+
+            const user = JSON.parse(storedUser);
+            const userId = user.userId;
+
+            fetch("/api/education-level", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: userId,
+                    level: selectedLevel
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.level) {
+                        window.location.href = "education.html";
+                    } else {
+                        alert(data.message || "Could not save your level.");
+                    }
+
+                })
+                .catch(error => {
+                    console.error("Education level error:", error);
+                    alert("Something went wrong.");
+                });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

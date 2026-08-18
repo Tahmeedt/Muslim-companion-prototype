@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Document</title>
+    <link rel="stylesheet" href="style-ed.css">
+</head>
+<body>
+
+    <!-- Mode Switcher -->
+    <div id="modeSwitcher" class="collapsed">
+    
+        <button id="modeToggle" class="mode-toggle">
+            >>>
+        </button>
+    
+        <div class="mode-options">
+    
+            <button onclick="window.location.href='index.html'">
+                ☪ Companion
+            </button>
+    
+            <button onclick="window.location.href='education.html'">
+                🎓 Education
+            </button>
+    
+        </div>
+    
+    </div>
+
+    <div class="topbar">
+
+        <div class="brand">🕌 Muslim Companion</div>
+
+        <div class="nav-links">
+            <a href="#" class="active">Home</a>
+            <a href="/courses/">Courses</a>
+        </div>
+
+        <button id="logoutButton" class="logout">
+            Logout
+        </button>
+
+    </div>
+
+
+    <main class="education-home">
+
+        <!-- Welcome -->
+        <section class="welcome">
+            <div>
+                <span class="welcome-label">EDUCATION MODE</span>
+                <h1>Assalamu Alaikum 👋</h1>
+                <p>
+                    Continue your journey of learning and strengthen your Islamic knowledge.
+                </p>
+            </div>
+        </section>
+
+        <section class="overall-progress">
+        
+            <div class="overall-progress-header">
+        
+                <div>
+                    <span class="progress-label">
+                        YOUR LEARNING PROGRESS
+                    </span>
+        
+                    <h2 id="overallProgressText">
+                        Loading...
+                    </h2>
+                </div>
+        
+                <div class="overall-progress-number" id="overallProgressNumber">
+                    0%
+                </div>
+        
+            </div>
+        
+        
+            <div class="overall-progress-bar">
+        
+                <div id="overallProgressFill" class="overall-progress-fill">
+                </div>
+        
+            </div>
+        
+        
+            <p id="overallProgressDetails">
+                Loading your progress...
+            </p>
+        
+        </section>
+        
+        
+        <!-- Learning Level -->
+        <section class="level-summary">
+        
+            <div class="level-summary-icon">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
+        
+            <div class="level-summary-info">
+                <span>YOUR LEARNING LEVEL</span>
+                <h2 id="currentLevel">Loading...</h2>
+                <p id="levelDescription">
+                    You're starting with the foundations of Islamic knowledge.
+                </p>
+            </div>
+        
+            <a href="level.html" class="change-level">
+                Change Level
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        
+        </section>
+
+        <!-- Continue Learning -->
+        <section class="continue-section">
+
+            <div class="section-heading">
+                <h2>Continue Learning</h2>
+                <span>Pick up where you left off</span>
+            </div>
+
+            <div class="continue-card">
+
+                <div class="course-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+
+                <div class="course-info">
+                    <span class="course-category">SALAH</span>
+                    <h3>The Five Daily Prayers</h3>
+                    <p>Learn about the importance and basics of Salah.</p>
+
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+
+                        <span>0% complete</span>
+                    </div>
+                </div>
+
+                <button class="continue-btn">
+                    Continue <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Categories -->
+        <section class="categories-section">
+
+            <div class="section-heading">
+                <h2>Explore Courses</h2>
+                <span>Choose something to learn</span>
+            </div>
+
+            <div class="course-grid">
+
+                <div class="card course-card">
+                    <div class="category-icon">
+                        <i class="fa-solid fa-book-quran"></i>
+                    </div>
+                    <h3>Qur'an</h3>
+                    <p>Learn about the Qur'an and its teachings.</p>
+                    <span class="course-count">Coming soon</span>
+                </div>
+
+
+                <div class="card course-card">
+                    <div class="category-icon">
+                        <i class="fa-solid fa-mosque"></i>
+                    </div>
+                    <h3>Salah</h3>
+                    <p>Understand prayer and how to perform it correctly.</p>
+                    <span class="course-count">Coming soon</span>
+                </div>
+
+
+                <div class="card course-card">
+                    <div class="category-icon">
+                        <i class="fa-solid fa-star-and-crescent"></i>
+                    </div>
+                    <h3>Aqeedah</h3>
+                    <p>Explore the foundations of Islamic belief.</p>
+                    <span class="course-count">Coming soon</span>
+                </div>
+
+
+                <div class="card course-card">
+                    <div class="category-icon">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    <h3>Seerah</h3>
+                    <p>Learn about the life of Prophet Muhammad ﷺ.</p>
+                    <span class="course-count">Coming soon</span>
+                </div>
+
+
+                <div class="card course-card">
+                    <div class="category-icon">
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                    <h3>Fasting</h3>
+                    <p>Learn about fasting, Ramadan and its importance.</p>
+                    <span class="course-count">Coming soon</span>
+                </div>
+
+
+                <div class="card course-card">
+                    <div class="category-icon">
+                        <i class="fa-solid fa-hands-praying"></i>
+                    </div>
+                    <h3>Du'a & Dhikr</h3>
+                    <p>Discover important supplications and remembrance.</p>
+                    <span class="course-count">Coming soon</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Progress -->
+        <section class="progress-section">
+
+            <div class="section-heading">
+                <h2>Your Progress</h2>
+                <span>Keep building your knowledge</span>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="card stat-card">
+                    <i class="fa-solid fa-book"></i>
+                    <strong>0</strong>
+                    <span>Lessons Completed</span>
+                </div>
+
+                <div class="card stat-card">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <strong id="progressLevel">Loading...</strong>
+                    <span>Current Level</span>
+                </div>
+
+                <div class="card stat-card">
+                    <i class="fa-solid fa-fire"></i>
+                    <strong>0</strong>
+                    <span>Day Streak</span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+    <script>
+
+        async function loadEducationLevel() {
+
+            const storedUser = localStorage.getItem("user");
+
+            if (!storedUser) {
+                console.log("No logged-in user found.");
+                return;
+            }
+
+            const user = JSON.parse(storedUser);
+            const userId = user.userId;
+
+            try {
+
+                const response = await fetch(
+                    `/api/education-level/${userId}`
+                );
+
+                const data = await response.json();
+
+                const levelElement =
+                    document.getElementById("currentLevel");
+
+                const progressLevel =
+                    document.getElementById("progressLevel");
+
+                if (data.level) {
+
+                    levelElement.textContent = data.level;
+                    progressLevel.textContent = data.level;
+
+                } else {
+
+                    levelElement.textContent = "Not selected";
+                    progressLevel.textContent = "Not selected";
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Failed to load education level:",
+                    error
+                );
+
+                document.getElementById(
+                    "currentLevel"
+                ).textContent = "Unavailable";
+
+                document.getElementById(
+                    "progressLevel"
+                ).textContent = "Unavailable";
+
+            }
+
+        }
+
+
+        loadEducationLevel();
+
+                const modeSwitcher = document.getElementById("modeSwitcher");
+                const modeToggle = document.getElementById("modeToggle");
+
+                modeToggle.addEventListener("click", function () {
+
+                    modeSwitcher.classList.toggle("collapsed");
+
+                if (modeSwitcher.classList.contains("collapsed")) {
+                    modeToggle.textContent = ">>>";
+        } else {
+                    modeToggle.textContent = "<<<";
+        }
+
+    });
+
+    document.getElementById("logoutButton").addEventListener("click", function () {
+            localStorage.removeItem("user");
+            window.location.href = "/login.html";
+        });
+
+        /* =================================
+       OVERALL EDUCATION PROGRESS
+    ================================= */
+
+            async function loadOverallProgress() {
+
+                const storedUser =
+                    localStorage.getItem("user");
+
+
+                if (!storedUser) {
+
+                    console.log(
+                        "No logged-in user found."
+                    );
+
+                    return;
+
+                }
+
+
+                const user =
+                    JSON.parse(storedUser);
+
+
+                const userId =
+                    user.userId;
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `/api/education-progress/${userId}`
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    const completedLessons =
+                        data.completedLessons || 0;
+
+
+                    /*
+                     * Change this number when
+                     * you add/remove lessons.
+                     */
+
+                    const totalLessons = 12;
+
+
+                    const percentage =
+                        totalLessons === 0
+                            ? 0
+                            : Math.round(
+                                (completedLessons / totalLessons) * 100
+                            );
+
+
+                    /*
+                     * Update percentage
+                     */
+
+                    document.getElementById(
+                        "overallProgressText"
+                    ).textContent =
+                        `${percentage}% Complete`;
+
+
+                    document.getElementById(
+                        "overallProgressNumber"
+                    ).textContent =
+                        `${percentage}%`;
+
+
+                    document.getElementById(
+                        "overallProgressFill"
+                    ).style.width =
+                        `${percentage}%`;
+
+
+                    /*
+                     * Update lesson count
+                     */
+
+                    document.getElementById(
+                        "overallProgressDetails"
+                    ).textContent =
+                        `${completedLessons} of ${totalLessons} lessons completed`;
+
+                    // Update Continue Learning progress
+                    const continueProgress =
+                        document.querySelector(".continue-card .progress");
+
+                    const continueProgressText =
+                        document.querySelector(".continue-card .progress-container span");
+
+                    if (continueProgress) {
+                        continueProgress.style.width = `${percentage}%`;
+                    }
+
+                    if (continueProgressText) {
+                        continueProgressText.textContent =
+                            `${percentage}% complete`;
+                    }
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Failed to load overall progress:",
+                        error
+                    );
+
+                }
+
+            }
+
+
+            loadOverallProgress();
+    </script>
+</body>
+</html>

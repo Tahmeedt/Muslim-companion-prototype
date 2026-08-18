@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <title>Lesson | Muslim Companion</title>
+
+    <link rel="stylesheet" href="style-courses.css">
+
+</head>
+
+<body>
+
+
+    <!-- ================================
+         TOP BAR
+    ================================= -->
+
+    <div class="topbar">
+
+        <div class="brand">
+            🕌 Muslim Companion
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/education.html">
+                Home
+            </a>
+
+            <a href="index.html">
+                Courses
+            </a>
+
+        </div>
+
+        <button class="logout" onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+
+
+    <!-- ================================
+         LESSON PAGE
+    ================================= -->
+
+    <main class="lesson-page">
+
+
+        <!-- Back -->
+
+        <a id="backToCourse" class="lesson-back">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Course
+
+        </a>
+
+
+
+        <!-- Lesson Header -->
+
+        <section class="lesson-header">
+
+            <span id="lessonCategory">
+                SALAH
+            </span>
+
+            <h1 id="lessonTitle">
+                Loading...
+            </h1>
+
+            <p id="lessonDescription">
+                Loading lesson...
+            </p>
+
+        </section>
+
+
+
+        <!-- Lesson Content -->
+
+        <article class="lesson-content">
+
+
+            <!-- Introduction -->
+
+            <section class="lesson-section">
+
+                <h2>
+                    <i class="fa-solid fa-book-open"></i>
+                    Introduction
+                </h2>
+
+                <p id="lessonIntroduction">
+                    Loading...
+                </p>
+
+            </section>
+
+
+
+            <!-- Key Point -->
+
+            <section class="lesson-highlight">
+
+                <div class="highlight-icon">
+
+                    <i class="fa-solid fa-lightbulb"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Key Point
+                    </strong>
+
+                    <p id="keyPoint">
+                        Loading...
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- Main Content -->
+
+            <section class="lesson-section">
+
+                <h2>
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    What You Should Know
+                </h2>
+
+                <div id="lessonMainContent">
+
+                    Loading...
+
+                </div>
+
+            </section>
+
+
+
+            <!-- Summary -->
+
+            <section class="lesson-summary">
+
+                <h2>
+                    <i class="fa-solid fa-list-check"></i>
+                    Lesson Summary
+                </h2>
+
+                <ul id="lessonSummary">
+                    <!-- Summary points added by JavaScript -->
+                </ul>
+
+            </section>
+
+
+        </article>
+
+
+        <!-- Lesson Quiz -->
+        
+        <section id="lessonQuiz" class="lesson-quiz">
+        
+            <div class="lesson-quiz-header">
+        
+                <h2>
+                    <i class="fa-solid fa-circle-question"></i>
+                    Lesson Quiz
+                </h2>
+        
+                <p>
+                    Test your understanding of this lesson.
+                </p>
+        
+            </div>
+        
+            <div id="quizQuestions">
+                <!-- Quiz questions will appear here -->
+            </div>
+        
+            <button id="checkQuiz" class="quiz-check-btn">
+                Check Answers
+            </button>
+        
+            <div id="quizResult" class="quiz-result"></div>
+        
+        </section>
+
+        <!-- Lesson Navigation -->
+
+        <div class="lesson-navigation">
+
+            <button id="previousLesson" class="lesson-nav-btn">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Previous
+
+            </button>
+
+
+            <button id="completeLesson" class="complete-lesson-btn">
+
+                <i class="fa-solid fa-check"></i>
+
+                Complete Lesson
+
+            </button>
+
+
+            <button id="nextLesson" class="lesson-nav-btn">
+
+                Next
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- ================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script src="/data/courses.js"></script>
+    
+    <script>
+
+        function logout() {
+                localStorage.removeItem("user");
+                window.location.href = "/login.html";
+            }
+
+
+        /* =================================
+           LESSON DATA
+        ================================= */
+
+        const lessons = {
+
+                /* =================================
+                   SALAH FOUNDATIONS
+                ================================= */
+
+                "salah-foundations": {
+
+                    category: "SALAH",
+
+                    lessons: {
+
+                        1: {
+
+                            title: "What is Salah?",
+
+                            description:
+                                "Learn what Salah is and why it is important.",
+
+                            introduction:
+                                "Salah is the formal prayer that Muslims perform as an important act of worship. Muslims perform five obligatory prayers throughout each day.",
+
+                            keyPoint:
+                                "Salah is one of the Five Pillars of Islam.",
+
+                            content: `
+                    <p>
+                        Salah is an essential part of a Muslim's daily life.
+                        It provides regular opportunities to worship Allah,
+                        remember Him and seek His guidance.
+                    </p>
+
+                    <p>
+                        Muslims perform five obligatory prayers each day:
+                        Fajr, Dhuhr, Asr, Maghrib and Isha.
+                    </p>
+                `,
+
+                            summary: [
+                                "Salah is the formal prayer in Islam.",
+                                "There are five obligatory prayers each day.",
+                                "Salah is one of the Five Pillars of Islam."
+                            ]
+
+                        },
+
+
+                        2: {
+
+                            title: "The Five Daily Prayers",
+
+                            description:
+                                "Learn about the five obligatory daily prayers.",
+
+                            introduction:
+                                "Muslims perform five obligatory prayers at different times throughout the day and night.",
+
+                            keyPoint:
+                                "The five prayers are Fajr, Dhuhr, Asr, Maghrib and Isha.",
+
+                            content: `
+                    <p>
+                        Each prayer has its own time during the day.
+                        Together, these prayers help Muslims maintain
+                        a regular connection with Allah.
+                    </p>
+
+                    <ul>
+                        <li><strong>Fajr</strong> — the dawn prayer.</li>
+                        <li><strong>Dhuhr</strong> — the midday prayer.</li>
+                        <li><strong>Asr</strong> — the afternoon prayer.</li>
+                        <li><strong>Maghrib</strong> — the prayer after sunset.</li>
+                        <li><strong>Isha</strong> — the night prayer.</li>
+                    </ul>
+                `,
+
+                            summary: [
+                                "There are five obligatory prayers.",
+                                "Each prayer has its own time.",
+                                "The prayers are spread throughout the day."
+                            ]
+
+                        },
+
+
+                        3: {
+
+                            title: "Preparing for Salah",
+
+                            description:
+                                "Learn what is needed before beginning Salah.",
+
+                            introduction:
+                                "There are important preparations that Muslims make before performing Salah.",
+
+                            keyPoint:
+                                "Preparation helps ensure that Salah is performed correctly and respectfully.",
+
+                            content: `
+                    <p>
+                        Before Salah, Muslims make sure that they are
+                        in a suitable state for prayer and that the
+                        conditions for prayer are fulfilled.
+                    </p>
+
+                    <p>
+                        This includes things such as purification,
+                        appropriate clothing, facing the Qiblah and
+                        making sure the prayer time has begun.
+                    </p>
+                `,
+
+                            summary: [
+                                "Preparation is an important part of Salah.",
+                                "Purification is required for prayer.",
+                                "Muslims face the Qiblah during Salah."
+                            ]
+
+                        }
+
+                    }
+
+                },
+
+
+                /* =================================
+                   what-it-means-to-be-muslim
+                ================================= */
+
+                "what-it-means-to-be-muslim": {
+
+                    category: "MEANING",
+
+                    lessons: {
+
+                        1: {
+
+                            title: "What do you need to do to be Muslim?",
+
+                            description:
+                                "Learn how to become a Muslim and what you must do to be considered a muslim.",
+
+                            introduction:
+                                "The Qur'an is the central scripture of Islam and is regarded by Muslims as the word of Allah revealed to Prophet Muhammad ﷺ.",
+
+                            keyPoint:
+                                "The Qur'an is the revelation from Allah given to Prophet Muhammad ﷺ.",
+
+                            content: `
+                    <p>
+                        The Qur'an is the holy book of Islam. Muslims believe
+                        that it was revealed by Allah to Prophet Muhammad ﷺ
+                        through the Angel Jibreel.
+                    </p>
+
+                    <p>
+                        It provides guidance about belief, worship,
+                        character and how Muslims should live their lives.
+                    </p>
+                `,
+
+                            summary: [
+                                "The Qur'an is the central scripture of Islam.",
+                                "Muslims believe it was revealed by Allah.",
+                                "The Qur'an provides guidance for Muslims."
+                            ]
+
+                        },
+
+
+                        2: {
+
+                            title: "How the Qur'an was Revealed",
+
+                            description:
+                                "Learn about the revelation of the Qur'an.",
+
+                            introduction:
+                                "The Qur'an was revealed to Prophet Muhammad ﷺ over a period of approximately 23 years.",
+
+                            keyPoint:
+                                "The Qur'an was revealed gradually rather than all at once.",
+
+                            content: `
+                    <p>
+                        The revelation of the Qur'an began when Prophet
+                        Muhammad ﷺ was in the Cave of Hira.
+                    </p>
+
+                    <p>
+                        The revelation continued throughout the Prophet's
+                        mission, providing guidance to him and the Muslim
+                        community.
+                    </p>
+                `,
+
+                            summary: [
+                                "The revelation began in the Cave of Hira.",
+                                "The Qur'an was revealed over approximately 23 years.",
+                                "The revelation provided guidance to the Muslim community."
+                            ]
+
+                        },
+
+
+                        3: {
+
+                            title: "Respecting the Qur'an",
+
+                            description:
+                                "Learn about the importance of treating the Qur'an with respect.",
+
+                            introduction:
+                                "Muslims treat the Qur'an with great respect because they believe it is the word of Allah.",
+
+                            keyPoint:
+                                "The Qur'an should be approached with respect and care.",
+
+                            content: `
+                    <p>
+                        Muslims show respect for the Qur'an through their
+                        behaviour, attentiveness and care when reading it.
+                    </p>
+
+                    <p>
+                        Learning and reflecting upon its teachings is also
+                        an important part of engaging with the Qur'an.
+                    </p>
+                `,
+
+                            summary: [
+                                "Muslims treat the Qur'an with respect.",
+                                "The Qur'an should be approached carefully and attentively.",
+                                "Muslims are encouraged to learn from its teachings."
+                            ]
+
+                        }
+
+                    }
+
+                },
+
+
+                /* =================================
+                   AQEEDAH FOUNDATIONS
+                ================================= */
+
+                "aqeedah-foundations": {
+
+                    category: "AQEEDAH",
+
+                    lessons: {
+
+                        1: {
+
+                            title: "What is Aqeedah?",
+
+                            description:
+                                "Learn what Aqeedah means and why it matters.",
+
+                            introduction:
+                                "Aqeedah refers to the beliefs that a Muslim holds as part of their faith.",
+
+                            keyPoint:
+                                "Aqeedah concerns the fundamental beliefs of Islam.",
+
+                            content: `
+                    <p>
+                        Aqeedah comes from a word meaning belief or
+                        something that is firmly held.
+                    </p>
+
+                    <p>
+                        Islamic Aqeedah includes beliefs about Allah,
+                        His angels, His books, His messengers, the Last Day
+                        and divine decree.
+                    </p>
+                `,
+
+                            summary: [
+                                "Aqeedah refers to Islamic beliefs.",
+                                "Aqeedah forms an important part of a Muslim's faith.",
+                                "Islamic belief includes the six articles of faith."
+                            ]
+
+                        },
+
+
+                        2: {
+
+                            title: "Belief in Allah",
+
+                            description:
+                                "Learn about the foundation of Islamic belief.",
+
+                            introduction:
+                                "Belief in Allah is the most fundamental belief in Islam.",
+
+                            keyPoint:
+                                "Muslims believe that Allah is One and has no partner.",
+
+                            content: `
+                    <p>
+                        Muslims believe that Allah is the only One worthy
+                        of worship.
+                    </p>
+
+                    <p>
+                        Belief in Allah includes recognising His
+                        uniqueness, His perfection and His right to be
+                        worshipped.
+                    </p>
+                `,
+
+                            summary: [
+                                "Allah is One.",
+                                "Allah alone deserves worship.",
+                                "Belief in Allah is central to Islam."
+                            ]
+
+                        },
+
+
+                        3: {
+
+                            title: "The Six Articles of Faith",
+
+                            description:
+                                "Explore the fundamental beliefs of Islam.",
+
+                            introduction:
+                                "The six articles of faith describe the fundamental beliefs that Muslims affirm.",
+
+                            keyPoint:
+                                "Muslims believe in Allah, His angels, His books, His messengers, the Last Day and divine decree.",
+
+                            content: `
+                    <ul>
+                        <li>Belief in Allah.</li>
+                        <li>Belief in the angels.</li>
+                        <li>Belief in the revealed books.</li>
+                        <li>Belief in the messengers.</li>
+                        <li>Belief in the Last Day.</li>
+                        <li>Belief in divine decree.</li>
+                    </ul>
+                `,
+
+                            summary: [
+                                "There are six major articles of faith.",
+                                "They describe fundamental beliefs in Islam.",
+                                "These beliefs form part of Islamic Aqeedah."
+                            ]
+
+                        }
+
+                    }
+
+                },
+
+
+                /* =================================
+                   SEERAH FOUNDATIONS
+                ================================= */
+
+                "seerah-foundations": {
+
+                    category: "SEERAH",
+
+                    lessons: {
+
+                        1: {
+
+                            title: "What is Seerah?",
+
+                            description:
+                                "Learn what Seerah means and why studying it is important.",
+
+                            introduction:
+                                "Seerah refers to the study of the life and example of Prophet Muhammad ﷺ.",
+
+                            keyPoint:
+                                "Studying the Seerah helps Muslims learn about the life and example of Prophet Muhammad ﷺ.",
+
+                            content: `
+                    <p>
+                        The Seerah covers the life of Prophet Muhammad ﷺ,
+                        including important events before and after the
+                        beginning of his Prophethood.
+                    </p>
+
+                    <p>
+                        Studying the Seerah can help Muslims understand
+                        how the Prophet ﷺ lived, taught and interacted
+                        with others.
+                    </p>
+                `,
+
+                            summary: [
+                                "Seerah means the study of the Prophet's ﷺ life.",
+                                "The Seerah covers important events in his life.",
+                                "The Prophet ﷺ is an example for Muslims."
+                            ]
+
+                        },
+
+
+                        2: {
+
+                            title: "The Birth of Prophet Muhammad ﷺ",
+
+                            description:
+                                "Learn about the early life of the Prophet ﷺ.",
+
+                            introduction:
+                                "Prophet Muhammad ﷺ was born in Makkah into the Quraysh tribe.",
+
+                            keyPoint:
+                                "Prophet Muhammad ﷺ was born in Makkah and belonged to Quraysh.",
+
+                            content: `
+                    <p>
+                        Prophet Muhammad ﷺ was born in Makkah into the
+                        Quraysh tribe.
+                    </p>
+
+                    <p>
+                        His early life took place in the society of Makkah
+                        before he received the first revelation.
+                    </p>
+                `,
+
+                            summary: [
+                                "Prophet Muhammad ﷺ was born in Makkah.",
+                                "He belonged to the Quraysh tribe.",
+                                "His Prophethood began later in his life."
+                            ]
+
+                        },
+
+
+                        3: {
+
+                            title: "The Beginning of Revelation",
+
+                            description:
+                                "Learn about the beginning of the Prophet's mission.",
+
+                            introduction:
+                                "The first revelation marked the beginning of Prophet Muhammad's ﷺ mission as a messenger of Allah.",
+
+                            keyPoint:
+                                "The first revelation was received in the Cave of Hira.",
+
+                            content: `
+                    <p>
+                        Prophet Muhammad ﷺ would spend time in the Cave
+                        of Hira before the first revelation.
+                    </p>
+
+                    <p>
+                        The first revelation marked the beginning of his
+                        mission as the final messenger of Allah.
+                    </p>
+                `,
+
+                            summary: [
+                                "The first revelation marked the beginning of the Prophetic mission.",
+                                "The first revelation occurred in the Cave of Hira.",
+                                "Prophet Muhammad ﷺ was the final messenger of Allah."
+                            ]
+
+                        }
+
+                    }
+
+                }
+
+            };
+
+
+
+        /* =================================
+           READ URL
+        ================================= */
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+
+        const courseId =
+            params.get("course");
+
+
+        const lessonId =
+            params.get("lesson");
+
+        /* =================================
+       FIND COURSE FROM CENTRAL DATA
+    ================================= */
+
+            let centralCourse = null;
+
+            for (const level in courses) {
+
+                const levelCourses =
+                    courses[level];
+
+                const foundCourse =
+                    levelCourses.find(
+                        item => item.id === courseId
+                    );
+
+                if (foundCourse) {
+
+                    centralCourse =
+                        foundCourse;
+
+                    break;
+
+                }
+
+            }
+
+
+        const course =
+            lessons[courseId];
+
+
+        const lesson =
+            course?.lessons[lessonId];
+
+        /* =================================
+       CONNECT CENTRAL COURSE DATA
+    ================================= */
+
+            if (centralCourse && lesson) {
+
+                const centralLesson =
+                    centralCourse.lessons[Number(lessonId) - 1];
+
+                if (centralLesson && centralLesson.quiz) {
+
+                    lesson.quiz =
+                        centralLesson.quiz;
+
+                }
+
+            }
+
+
+
+        /* =================================
+           CHECK LESSON
+        ================================= */
+
+        if (!course || !lesson) {
+
+            document.getElementById("lessonTitle")
+                .textContent = "Lesson Not Found";
+
+
+            document.getElementById("lessonDescription")
+                .textContent =
+                "The lesson you are looking for could not be found.";
+
+        } else {
+
+
+            /* =============================
+               LESSON INFORMATION
+            ============================= */
+
+            document.getElementById("lessonCategory")
+                .textContent = course.category;
+
+
+            document.getElementById("lessonTitle")
+                .textContent = lesson.title;
+
+
+            document.getElementById("lessonDescription")
+                .textContent = lesson.description;
+
+
+            document.getElementById("lessonIntroduction")
+                .textContent = lesson.introduction;
+
+
+            document.getElementById("keyPoint")
+                .textContent = lesson.keyPoint;
+
+
+            document.getElementById("lessonMainContent")
+                .innerHTML = lesson.content;
+
+            
+            /* =================================
+   LESSON QUIZ
+================================= */
+
+            const quizContainer =
+                document.getElementById("quizQuestions");
+
+            const quizResult =
+                document.getElementById("quizResult");
+
+            const checkQuiz =
+                document.getElementById("checkQuiz");
+
+
+            if (lesson.quiz && lesson.quiz.length > 0) {
+
+                lesson.quiz.forEach((question, questionIndex) => {
+
+                    const questionDiv =
+                        document.createElement("div");
+
+                    questionDiv.className =
+                        "quiz-question";
+
+                    questionDiv.innerHTML = `
+
+            <h3>
+                ${questionIndex + 1}. ${question.question}
+            </h3>
+
+            <div class="quiz-options">
+
+                ${question.options.map((option, optionIndex) => `
+
+                    <label class="quiz-option">
+
+                        <input
+                            type="radio"
+                            name="question-${questionIndex}"
+                            value="${optionIndex}"
+                        >
+
+                        <span>
+                            ${option}
+                        </span>
+
+                    </label>
+
+                `).join("")}
+
+            </div>
+
+        `;
+
+                    quizContainer.appendChild(questionDiv);
+
+                });
+
+            } else {
+
+                document.getElementById("lessonQuiz").style.display =
+                    "none";
+
+            }
+
+
+            /* =================================
+               CHECK QUIZ
+            ================================= */
+
+            checkQuiz.addEventListener("click", async function () {
+
+                let score = 0;
+                let answered = 0;
+
+                const questions =
+                    document.querySelectorAll(".quiz-question");
+
+
+                lesson.quiz.forEach((question, questionIndex) => {
+
+                    const selected =
+                        document.querySelector(
+                            `input[name="question-${questionIndex}"]:checked`
+                        );
+
+                    const questionElement =
+                        questions[questionIndex];
+
+                    const options =
+                        questionElement.querySelectorAll(".quiz-option");
+
+
+                    /* Remove previous feedback */
+
+                    options.forEach(option => {
+
+                        option.classList.remove(
+                            "quiz-correct",
+                            "quiz-incorrect"
+                        );
+
+                    });
+
+
+                    /* No answer */
+
+                    if (!selected) {
+                        return;
+                    }
+
+
+                    answered++;
+
+
+                    const selectedIndex =
+                        Number(selected.value);
+
+
+                    /* Correct */
+
+                    if (selectedIndex === question.answer) {
+
+                        score++;
+
+                        options[selectedIndex]
+                            .classList.add("quiz-correct");
+
+                    }
+
+
+                    /* Incorrect */
+
+                    else {
+
+                        options[selectedIndex]
+                            .classList.add("quiz-incorrect");
+
+
+                        /* Highlight correct answer */
+
+                        options[question.answer]
+                            .classList.add("quiz-correct");
+
+                    }
+
+                });
+
+
+                /* =============================
+                   CHECK ALL ANSWERED
+                ============================= */
+
+                if (answered < lesson.quiz.length) {
+
+                    quizResult.textContent =
+                        "Please answer every question.";
+
+                    quizResult.classList.remove("success");
+
+                    return;
+
+                }
+
+
+                /* =============================
+                   PERFECT SCORE
+                ============================= */
+
+                if (score === lesson.quiz.length) {
+
+                    quizResult.textContent =
+                        `🎉 Excellent! You got ${score}/${lesson.quiz.length} correct. Quiz completed!`;
+
+                    quizResult.classList.add("success");
+
+
+                    /* =============================
+                       SAVE QUIZ COMPLETION
+                    ============================= */
+
+                    const storedUser =
+                        localStorage.getItem("user");
+
+
+                    if (!storedUser) {
+
+                        console.log(
+                            "No logged-in user found."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const user =
+                        JSON.parse(storedUser);
+
+
+                    try {
+
+                        const response =
+                            await fetch("/api/quiz-complete", {
+
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+
+                                body: JSON.stringify({
+
+                                    userId: user.userId,
+
+                                    courseId: courseId,
+
+                                    lessonNumber: Number(lessonId)
+
+                                })
+
+                            });
+
+
+                        const data =
+                            await response.json();
+
+
+                        if (response.ok) {
+
+                            console.log(
+                                "Quiz progress saved:",
+                                data
+                            );
+
+                        } else {
+
+                            console.error(
+                                "Quiz progress was not saved:",
+                                data
+                            );
+
+                        }
+
+                    } catch (error) {
+
+                        console.error(
+                            "Error saving quiz progress:",
+                            error
+                        );
+
+                    }
+
+                }
+
+
+                /* =============================
+                   NOT PERFECT
+                ============================= */
+
+                else {
+
+                    quizResult.textContent =
+                        `You got ${score}/${lesson.quiz.length} correct. Review the highlighted answers and try again.`;
+
+                    quizResult.classList.remove("success");
+
+                }
+
+            });
+
+
+            /* =============================
+               SUMMARY
+            ============================= */
+
+            const summary =
+                document.getElementById("lessonSummary");
+
+
+            lesson.summary.forEach(point => {
+
+                const li =
+                    document.createElement("li");
+
+                li.textContent = point;
+
+                summary.appendChild(li);
+
+            });
+
+
+
+            /* =============================
+               BACK TO COURSE
+            ============================= */
+
+            document.getElementById("backToCourse")
+                .href =
+                `course.html?course=${courseId}`;
+
+
+
+            /* =============================
+               PREVIOUS LESSON
+            ============================= */
+
+            const previousButton =
+                document.getElementById("previousLesson");
+
+
+            if (Number(lessonId) > 1) {
+
+                previousButton.onclick = function () {
+
+                    window.location.href =
+                        `lesson.html?course=${courseId}&lesson=${Number(lessonId) - 1}`;
+
+                };
+
+            } else {
+
+                previousButton.disabled = true;
+
+            }
+
+
+
+            /* =============================
+               NEXT LESSON
+            ============================= */
+
+            const nextButton =
+                document.getElementById("nextLesson");
+
+
+            const lessonCount =
+                Object.keys(course.lessons).length;
+
+
+            if (Number(lessonId) < lessonCount) {
+
+                nextButton.onclick = function () {
+
+                    window.location.href =
+                        `lesson.html?course=${courseId}&lesson=${Number(lessonId) + 1}`;
+
+                };
+
+            } else {
+
+                nextButton.disabled = true;
+
+            }
+
+        }
+
+
+
+        /* =================================
+       LOAD LESSON PROGRESS
+    ================================= */
+
+            async function loadLessonProgress() {
+
+                const storedUser =
+                    localStorage.getItem("user");
+
+                if (!storedUser) {
+                    return;
+                }
+
+                const user =
+                    JSON.parse(storedUser);
+
+                const userId =
+                    user.userId;
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `/api/lesson-progress/${userId}/${courseId}/${lessonId}`
+                        );
+
+                    const data =
+                        await response.json();
+
+
+                    if (data.completed) {
+
+                        const button =
+                            document.getElementById("completeLesson");
+
+                        button.innerHTML =
+                            '<i class="fa-solid fa-check"></i> Completed';
+
+                        button.classList.add("completed");
+
+                        button.disabled = true;
+
+                    }
+
+                } catch (error) {
+
+                    console.error(
+                        "Failed to load lesson progress:",
+                        error
+                    );
+
+                }
+
+            }
+
+
+            /* =================================
+               COMPLETE LESSON
+            ================================= */
+
+            document
+                .getElementById("completeLesson")
+                .addEventListener("click", async function () {
+
+                    const button = this;
+
+
+                    const storedUser =
+                        localStorage.getItem("user");
+
+
+                    if (!storedUser) {
+
+                        alert("Please log in first.");
+
+                        return;
+
+                    }
+
+
+                    const user =
+                        JSON.parse(storedUser);
+
+
+                    const userId =
+                        user.userId;
+
+
+                    try {
+
+                        const response =
+                            await fetch("/api/lesson-complete", {
+
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+
+                                body: JSON.stringify({
+
+                                    userId: userId,
+
+                                    courseId: courseId,
+
+                                    lessonNumber: Number(lessonId)
+
+                                })
+
+                            });
+
+
+                        const data =
+                            await response.json();
+
+
+                        if (!response.ok) {
+
+                            console.error(data);
+
+                            alert(
+                                "Could not save lesson progress."
+                            );
+
+                            return;
+
+                        }
+
+
+                        button.innerHTML =
+                            '<i class="fa-solid fa-check"></i> Completed';
+
+                        button.classList.add("completed");
+
+                        button.disabled = true;
+
+
+                        console.log(
+                            "Lesson progress saved:",
+                            data
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Error completing lesson:",
+                            error
+                        );
+
+                        alert(
+                            "Something went wrong while saving your progress."
+                        );
+
+                    }
+
+                });
+
+
+            /* =================================
+               CHECK PROGRESS ON PAGE LOAD
+            ================================= */
+
+            loadLessonProgress();
+
+
+
+        /* =================================
+           LOGOUT
+        ================================= */
+
+        function logout() {
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "/login.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

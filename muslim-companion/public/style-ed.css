@@ -1,0 +1,674 @@
+:root {
+    --primary: #15803D;
+    --primary-light: #4ADE80;
+    --bg: #052E16;
+    --card: #14532D;
+    --text: #F0FDF4;
+    --secondary: #166534;
+    --accent: #FACC15;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* Top bar */
+.topbar {
+    background: var(--card);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brand {
+    font-weight: bold;
+    color: var(--primary-light);
+}
+
+.logout {
+    background: var(--primary);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}
+
+.logout:hover {
+    background: var(--primary-light);
+    color: black;
+}
+
+/* Nav */
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.8;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.nav-links a:hover {
+    background: rgba(34, 197, 94, 0.2);
+    opacity: 1;
+    color: var(--primary-light);
+}
+
+.card {
+    background: var(--card);
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.card h2 {
+    color: var(--primary-light);
+    margin-top: 0;
+    font-size: 18px;
+}
+
+/* Education Home */
+
+.education-home {
+    width: min(1150px, 92%);
+    margin: 0 auto;
+    padding: 45px 0 70px;
+}
+
+/* Welcome */
+
+.welcome {
+    background: linear-gradient(135deg,
+            var(--secondary),
+            var(--card));
+    padding: 42px;
+    border-radius: 18px;
+    border: 1px solid rgba(74, 222, 128, 0.12);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    margin-bottom: 45px;
+}
+
+.welcome-label {
+    color: var(--primary-light);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.welcome h1 {
+    margin: 10px 0 8px;
+    font-size: 34px;
+}
+
+.welcome p {
+    margin: 0;
+    color: rgba(240, 253, 244, 0.75);
+    font-size: 16px;
+}
+
+
+/* Section headings */
+
+.section-heading {
+    margin-bottom: 18px;
+}
+
+.section-heading h2 {
+    margin: 0 0 5px;
+    font-size: 23px;
+}
+
+.section-heading span {
+    color: rgba(240, 253, 244, 0.55);
+    font-size: 14px;
+}
+
+
+/* Continue Learning */
+
+.continue-section {
+    margin-bottom: 45px;
+}
+
+.continue-card {
+    background: var(--card);
+    border-radius: 15px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.course-icon {
+    width: 65px;
+    height: 65px;
+    min-width: 65px;
+    border-radius: 14px;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    color: white;
+}
+
+.course-info {
+    flex: 1;
+}
+
+.course-category {
+    color: var(--primary-light);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+.course-info h3 {
+    margin: 5px 0;
+    font-size: 19px;
+}
+
+.course-info p {
+    margin: 0 0 15px;
+    color: rgba(240, 253, 244, 0.6);
+    font-size: 14px;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.progress-container span {
+    font-size: 12px;
+    color: rgba(240, 253, 244, 0.55);
+}
+
+.progress-bar {
+    height: 7px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    width: 220px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: var(--primary-light);
+    border-radius: inherit;
+}
+
+.continue-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 11px 17px;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.continue-btn:hover {
+    background: var(--primary-light);
+    color: #052E16;
+}
+
+
+/* Course cards */
+
+.categories-section {
+    margin-bottom: 45px;
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.course-card {
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+.course-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(74, 222, 128, 0.3);
+}
+
+.category-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    background: rgba(21, 128, 61, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-light);
+    font-size: 19px;
+    margin-bottom: 15px;
+}
+
+.course-card h3 {
+    margin: 0 0 7px;
+}
+
+.course-card p {
+    color: rgba(240, 253, 244, 0.6);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 15px;
+}
+
+.course-count {
+    color: var(--primary-light);
+    font-size: 12px;
+}
+
+
+/* Progress */
+
+.progress-section {
+    margin-bottom: 20px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.stat-card {
+    text-align: center;
+}
+
+.stat-card i {
+    color: var(--primary-light);
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.stat-card span {
+    color: rgba(240, 253, 244, 0.55);
+    font-size: 13px;
+}
+
+
+/* Active navigation */
+
+.nav-links a.active {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--primary-light);
+    opacity: 1;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .topbar {
+        padding: 14px;
+    }
+
+    .brand {
+        font-size: 14px;
+    }
+
+    .nav-links {
+        gap: 2px;
+    }
+
+    .nav-links a {
+        padding: 6px;
+        font-size: 13px;
+    }
+
+    .logout {
+        padding: 7px 9px;
+        font-size: 12px;
+    }
+
+    .education-home {
+        width: 94%;
+        padding-top: 25px;
+    }
+
+    .welcome {
+        padding: 28px 22px;
+        margin-bottom: 32px;
+    }
+
+    .welcome h1 {
+        font-size: 27px;
+    }
+
+    .continue-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .continue-btn {
+        width: 100%;
+    }
+
+    .progress-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 7px;
+    }
+
+    .progress-bar {
+        width: 100%;
+    }
+
+    .course-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Learning Level */
+
+.level-summary {
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px 24px;
+
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    margin-bottom: 45px;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+    transition: 0.2s;
+}
+
+.level-summary:hover {
+    border-color: rgba(74, 222, 128, 0.25);
+}
+
+
+/* Level icon */
+
+.level-summary-icon {
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(21, 128, 61, 0.4);
+    color: var(--primary-light);
+
+    border-radius: 13px;
+
+    font-size: 22px;
+}
+
+
+/* Level information */
+
+.level-summary-info {
+    flex: 1;
+}
+
+.level-summary-info>span {
+    color: var(--primary-light);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+.level-summary-info h2 {
+    margin: 4px 0 4px;
+    font-size: 20px;
+}
+
+.level-summary-info p {
+    margin: 0;
+    color: rgba(240, 253, 244, 0.6);
+    font-size: 14px;
+}
+
+
+/* Change level button */
+
+.change-level {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background: var(--primary);
+    color: white;
+
+    text-decoration: none;
+
+    padding: 10px 15px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    white-space: nowrap;
+
+    transition: 0.2s;
+}
+
+.change-level:hover {
+    background: var(--primary-light);
+    color: var(--bg);
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .level-summary {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 18px;
+    }
+
+    .level-summary-info {
+        min-width: calc(100% - 73px);
+    }
+
+    .change-level {
+        width: 100%;
+        justify-content: center;
+        margin-top: 3px;
+    }
+
+}
+
+/* ================================
+MODE SWITCHER
+================================ */
+
+#modeSwitcher {
+    position: fixed;
+    bottom: 25px;
+    left: 0;
+    z-index: 1000;
+
+    padding: 10px;
+
+    background: #0F172A;
+    border-radius: 0 8px 8px 0;
+
+    opacity: 0.85;
+
+    transform: translateX(0);
+    transition: transform 0.35s ease, opacity 0.2s ease;
+}
+
+/* Collapsed - move the panel into the left wall */
+#modeSwitcher.collapsed {
+    transform: translateX(-100%);
+}
+
+/* Become solid when hovered */
+#modeSwitcher:hover {
+    opacity: 1;
+}
+
+/* Toggle button */
+.mode-toggle {
+    position: absolute;
+
+    right: -42px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    padding: 10px 8px;
+
+    background: #0F172A;
+    color: white;
+
+    border-radius: 0 8px 8px 0;
+    border: none;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+/* Stop the global button hover animation */
+.mode-toggle:hover {
+    transform: translateY(-50%);
+}
+
+/* Mode buttons */
+.mode-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mode-options button {
+    min-width: 140px;
+
+    background: #1E293B;
+    color: white;
+
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+}
+
+.mode-options button:hover {
+    background: #0B6B3A;
+    transform: none;
+}
+
+/* =================================
+   OVERALL LEARNING PROGRESS
+================================= */
+
+.overall-progress {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.overall-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.progress-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: 0.7;
+}
+
+
+.overall-progress h2 {
+    margin: 6px 0 0;
+}
+
+
+.overall-progress-number {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+
+.overall-progress-bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+
+.overall-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--primary-light);
+    border-radius: 20px;
+    transition: width 0.5s ease;
+}
+
+
+.overall-progress p {
+    margin: 12px 0 0;
+    opacity: 0.7;
+    font-size: 14px;
+}

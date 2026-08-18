@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <title>Courses - Muslim Companion</title>
+
+    <link rel="stylesheet" href="style-courses.css">
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+
+    <div class="topbar">
+
+        <div class="brand">
+            🕌 Muslim Companion
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/education.html">
+                Home
+            </a>
+
+            <a href="/courses/" class="active">
+                Courses
+            </a>
+
+        </div>
+
+        <button id="logoutButton" class="logout">
+            Logout
+        </button>
+
+    </div>
+
+
+    <main class="courses-page">
+
+        <!-- Header -->
+
+        <section class="courses-header">
+
+            <span class="header-label">
+                EDUCATION MODE
+            </span>
+
+            <h1>Courses</h1>
+
+            <p>
+                Build your Islamic knowledge through structured learning.
+            </p>
+
+        </section>
+
+
+        <!-- Level -->
+
+        <section class="level-banner">
+
+            <div class="level-icon">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
+
+            <div>
+
+                <span>
+                    YOUR LEARNING LEVEL
+                </span>
+
+                <h2 id="currentLevel">
+                    Loading...
+                </h2>
+
+            </div>
+
+            <a href="/level.html" class="change-level">
+                Change Level
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+        </section>
+
+
+        <!-- Courses -->
+
+        <section class="courses-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Explore Courses</h2>
+
+                    <span>
+                        Courses selected for your level
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="course-grid" id="courseGrid">
+                <!-- Courses will be loaded automatically -->
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Mode Switcher -->
+
+    <div id="modeSwitcher" class="collapsed">
+
+        <button id="modeToggle" class="mode-toggle">
+            >>>
+        </button>
+
+        <div class="mode-options">
+
+            <button onclick="window.location.href='/index.html'">
+                ☪ Companion
+            </button>
+
+            <button onclick="window.location.href='/education.html'">
+                🎓 Education
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="/data/courses.js"></script>
+
+    <script>
+
+        async function loadEducationLevel() {
+
+            const storedUser =
+                localStorage.getItem("user");
+
+            if (!storedUser) {
+                console.log("No logged-in user found.");
+                return;
+            }
+
+            const user =
+                JSON.parse(storedUser);
+
+            const userId =
+                user.userId;
+
+            try {
+
+                const response =
+                    await fetch(
+                        `/api/education-level/${userId}`
+                    );
+
+                const data =
+                    await response.json();
+
+                const levelElement =
+                    document.getElementById(
+                        "currentLevel"
+                    );
+
+                if (data.level) {
+
+                    levelElement.textContent =
+                        data.level;
+
+                } else {
+
+                    levelElement.textContent =
+                        "Not selected";
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Failed to load education level:",
+                    error
+                );
+
+                document.getElementById(
+                    "currentLevel"
+                ).textContent =
+                    "Unavailable";
+
+            }
+
+        }
+
+
+        loadEducationLevel();
+
+
+        /* Mode Switcher */
+
+        const modeSwitcher =
+            document.getElementById("modeSwitcher");
+
+        const modeToggle =
+            document.getElementById("modeToggle");
+
+
+        modeToggle.addEventListener(
+            "click",
+            function () {
+
+                modeSwitcher.classList.toggle(
+                    "collapsed"
+                );
+
+                if (
+                    modeSwitcher.classList.contains(
+                        "collapsed"
+                    )
+                ) {
+
+                    modeToggle.textContent =
+                        ">>>";
+
+                } else {
+
+                    modeToggle.textContent =
+                        "<<<";
+
+                }
+
+            }
+        );
+
+    </script>
+
+    <script>
+
+
+            /* =================================
+               LOAD COURSES
+            ================================= */
+
+            async function loadCourses() {
+
+                const storedUser = localStorage.getItem("user");
+
+                if (!storedUser) {
+
+                    console.log("No logged-in user found.");
+
+                    return;
+                }
+
+
+                const user = JSON.parse(storedUser);
+
+                const userId = user.userId;
+
+
+                try {
+
+                    const response = await fetch(
+                        `/api/education-level/${userId}`
+                    );
+
+
+                    const data = await response.json();
+
+
+                    const level = data.level || "Beginner";
+
+
+                    console.log("User level:", level);
+
+
+                    displayCourses(level);
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Failed to load education level:",
+                        error
+                    );
+
+                    displayCourses("Beginner");
+
+                }
+
+            }
+
+
+            /* =================================
+               DISPLAY COURSES
+            ================================= */
+
+            function displayCourses(level) {
+
+                const courseGrid =
+                    document.getElementById("courseGrid");
+
+
+                if (!courseGrid) {
+
+                    console.error("courseGrid not found!");
+
+                    return;
+                }
+
+
+                const levelCourses =
+                    courses[level] || courses.Beginner;
+
+
+                courseGrid.innerHTML = "";
+
+
+                if (levelCourses.length === 0) {
+
+                    courseGrid.innerHTML = `
+            <p class="no-courses">
+                Courses for this level are coming soon.
+            </p>
+        `;
+
+                    return;
+                }
+
+
+                levelCourses.forEach(course => {
+
+                    const card =
+                        document.createElement("a");
+
+
+                    card.className =
+                        "course-card";
+
+
+                    card.href =
+                        `course.html?course=${course.id}`;
+
+
+                    card.innerHTML = `
+
+            <div class="course-icon">
+
+                <i class="fa-solid ${course.icon}"></i>
+
+            </div>
+
+
+            <div class="course-content">
+
+                <span class="course-category">
+
+                    ${course.category}
+
+                </span>
+
+
+                <h3>
+
+                    ${course.title}
+
+                </h3>
+
+
+                <p>
+
+                    ${course.description}
+
+                </p>
+
+
+                <div class="course-footer">
+
+                    <span>
+
+                        <i class="fa-solid fa-book"></i>
+
+                        ${course.lessons.length} Lessons
+
+                    </span>
+
+
+                    <span class="start-course">
+
+                        Start
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+                    courseGrid.appendChild(card);
+
+                });
+
+            }
+
+
+            /* =================================
+               START
+            ================================= */
+
+            loadCourses();
+
+                console.log("ABOUT TO CONNECT LOGOUT");
+
+                document.getElementById("logoutButton").addEventListener("click", function () {
+
+                    console.log("LOGOUT BUTTON CLICKED");
+
+                    localStorage.removeItem("user");
+
+                    console.log("USER AFTER LOGOUT:", localStorage.getItem("user"));
+
+                    window.location.href = "/login.html";
+
+                }); 
+
+    </script>
+
+</body>
+
+</html>
