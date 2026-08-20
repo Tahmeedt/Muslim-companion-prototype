@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <title>Muslim Companion</title>
@@ -13,6 +15,10 @@
     <div class="topbar">
 
         <div class="brand">🕌 Muslim Companion</div>
+
+        <button id="mobileMenuButton" class="mobile-menu-button">
+            <i class="fas fa-bars"></i>
+        </button>
 
         <div class="nav-links">
             <a href="#" onclick="showSection('home')">Home</a>
@@ -2476,6 +2482,16 @@ document.getElementById("statToday").textContent =
                         `${streak} ${streak === 1 ? "day" : "days"}`;
 
 }
+
+    const mobileMenuButton =
+            document.getElementById("mobileMenuButton");
+
+        const navLinks =
+            document.querySelector(".nav-links");
+
+        mobileMenuButton.addEventListener("click", function () {
+            navLinks.classList.toggle("active");
+        });
 
     </script>
 

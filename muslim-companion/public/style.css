@@ -865,3 +865,81 @@ MODE SWITCHER
        background: #0B6B3A;
        transform: none;
    }
+
+
+
+   /* =================================
+   MOBILE NAVIGATION
+================================= */
+
+   .mobile-menu-button {
+       display: none;
+   }
+
+   @media (max-width: 768px) {
+
+       /* Top bar */
+       .topbar {
+           width: 100%;
+           flex-direction: row !important;
+           flex-wrap: wrap;
+           align-items: center;
+           justify-content: space-between;
+           gap: 0;
+           padding: 12px 15px;
+       }
+
+       /* Website name */
+       .brand {
+           font-size: 18px;
+       }
+
+       /* Hamburger */
+       .mobile-menu-button {
+           display: block !important;
+           width: auto !important;
+           height: auto !important;
+           margin-left: auto;
+           padding: 8px 10px !important;
+
+           background: transparent;
+           border: none;
+
+           color: var(--text);
+           font-size: 24px;
+
+           cursor: pointer;
+           z-index: 1001;
+       }
+
+       /* Hide desktop navigation */
+       .nav-links {
+           display: none !important;
+
+           width: 100%;
+           flex-direction: column;
+           gap: 5px;
+
+           margin-top: 10px;
+       }
+
+       /* Show navigation when hamburger is clicked */
+       .nav-links.active {
+           display: flex !important;
+       }
+
+       /* Mobile navigation links */
+       .nav-links a {
+           width: 100%;
+           padding: 12px;
+
+           text-align: center;
+
+           border-radius: 8px;
+       }
+
+       /* Hide desktop logout button */
+       .topbar .logout {
+           display: none !important;
+       }
+   }
